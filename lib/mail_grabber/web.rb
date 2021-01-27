@@ -1,33 +1,29 @@
 # frozen_string_literal: true
 
-require 'rack'
 require 'erb'
+require 'rack'
+
+require 'mail_grabber/database_helper'
+
+require 'mail_grabber/web/application_helper'
+require 'mail_grabber/web/application'
 
 module MailGrabber
-  class Web
-    include DatabaseHelper
+  module Web
+    extend self
 
-    def self.call(env)
-      new(env).response.finish
-    end
+    def app
+      @app ||= Rack::Builder.new do
+        use Rack::Static,
+            urls: ['/stylesheets'],
+            root: File.expand_path('web/assets', __dir__)
 
-    def initialize(env)
-      @request = Rack::Request.new(env)
-    end
-
-    def response
-      puts "===> @request.path: #{@request.path.inspect}"
-      case @request.path
-      when '/'
-        @all_message = all_message
-        Rack::Response.new(render('index.html.erb'))
-      else Rack::Response.new('Not found', 404)
+        run Web::Application
       end
     end
 
-    def render(template)
-      path = File.expand_path("web/views/#{template}", __dir__)
-      ERB.new(File.read(path)).result(binding)
+    def call(env)
+      app.call(env)
     end
   end
 end
