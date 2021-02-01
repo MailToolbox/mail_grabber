@@ -6,6 +6,7 @@ require 'rack'
 require 'mail_grabber/database_helper'
 
 require 'mail_grabber/web/application_helper'
+require 'mail_grabber/web/application_router'
 require 'mail_grabber/web/application'
 
 module MailGrabber

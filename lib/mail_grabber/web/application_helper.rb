@@ -4,7 +4,7 @@ module MailGrabber
   module Web
     module ApplicationHelper
       def root_path
-        "#{@env["SCRIPT_NAME"]}"
+        "#{script_name}"
       end
     end
   end

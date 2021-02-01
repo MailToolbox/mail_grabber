@@ -3,25 +3,64 @@
 module MailGrabber
   module Web
     class Application
+      extend ApplicationRouter
+
       include ApplicationHelper
       include DatabaseHelper
+
+      attr_reader :request, :response
 
       def self.call(env)
         new(env).response.finish
       end
 
       def initialize(env)
-        @env = env
         @request = Rack::Request.new(env)
+        @response = Rack::Response.new
+
+        process_request
       end
 
-      def response
-        case @request.path_info
-        when '/'
-          @all_message = all_message
-          Rack::Response.new(render('index.html.erb'))
-        else Rack::Response.new('Not found', 404)
+      def path
+        @path ||= request.path_info.empty? ? '/' : request.path_info
+      end
+
+      def params
+        request.params
+      end
+
+      def request_method
+        request.request_method
+      end
+
+      def script_name
+        request.script_name
+      end
+
+      def process_request
+        self.class.routes[request_method].each do |route|
+          extracted_params = route.extract_params(path)
+
+          if extracted_params
+            extracted_params.to_a.each do |param|
+              request.update_param(*param) unless param.empty?
+            end
+
+            return instance_exec &route.block
+          end
         end
+
+        response.status = 404
+        response.write('Not Found')
+      end
+
+      get '/' do
+        @all_message = all_message
+        response.write render('index.html.erb')
+      end
+
+      get '/test/:id' do
+        response.write "test id: #{params['id'].inspect}"
       end
 
       def render(template)
