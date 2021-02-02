@@ -11,7 +11,7 @@ require 'mail_grabber/web/application'
 
 module MailGrabber
   module Web
-    extend self
+    module_function
 
     def app
       @app ||= Rack::Builder.new do

@@ -41,13 +41,11 @@ module MailGrabber
         self.class.routes[request_method].each do |route|
           extracted_params = route.extract_params(path)
 
-          if extracted_params
-            extracted_params.to_a.each do |param|
-              request.update_param(*param) unless param.empty?
-            end
+          next unless extracted_params
 
-            return instance_exec &route.block
-          end
+          request.update_param('request_params', extracted_params)
+
+          return instance_exec(&route.block)
         end
 
         response.status = 404
@@ -60,7 +58,7 @@ module MailGrabber
       end
 
       get '/test/:id' do
-        response.write "test id: #{params['id'].inspect}"
+        response.write "test id: #{params['request_params']['id'].inspect}"
       end
 
       def render(template)
