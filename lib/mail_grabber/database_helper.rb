@@ -4,6 +4,7 @@ require 'sqlite3'
 
 module MailGrabber
   module DatabaseHelper
+    # Need documentation
     def store_message(message)
       insert_into_mail.execute(
         message.to&.join(', '),
@@ -17,6 +18,7 @@ module MailGrabber
       store_message_part(message)
     end
 
+    # Need documentation
     def store_message_part(message)
       extract_message_parts(message).each do |part|
         body = part.body.to_s
@@ -35,6 +37,7 @@ module MailGrabber
       end
     end
 
+    # Need documentation
     def all_message
       select_all_mail.execute.map { |row| row }
     end

@@ -13,6 +13,7 @@ module MailGrabber
   module Web
     module_function
 
+    # Method which build a Rack application and run the Web::Application
     def app
       @app ||= Rack::Builder.new do
         use Rack::Static,
@@ -23,6 +24,10 @@ module MailGrabber
       end
     end
 
+    # Method to call MailGrabber::Web. This method will call the app method
+    # above.
+    #
+    # @param [Hash] env the environment variables
     def call(env)
       app.call(env)
     end

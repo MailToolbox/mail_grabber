@@ -4,6 +4,10 @@ module MailGrabber
   class DeliveryMethod < MailPlugger::DeliveryMethod
     include DatabaseHelper
 
+    # Catch and save messages into a database that we can check those message in
+    # MailGrabber web application.
+    #
+    # @param [Mail::Message] message what we would like to send
     def deliver!(message)
       unless message.is_a?(Mail::Message)
         raise MailPlugger::Error::WrongParameter,
