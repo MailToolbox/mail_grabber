@@ -13,8 +13,8 @@ module MailGrabber
           # path pattern which helps to the router to find which block it should
           # execute. If path contains request parameters like '/test/1' then
           # it will match with the '/test/:id' pattern. In this case it will
-          # return with '{"id" => 1}' hash. If it is just a simple path like '/'
-          # and it has a pattern to match then it will return with '{}'.
+          # return with '{"id" => "1"}' hash. If it is just a simple path like
+          # '/' and it has a pattern to match then it will return with '{}'.
           # In the other case it will retrun with nil.
           #
           # @param [String] path
@@ -61,8 +61,8 @@ module MailGrabber
       def route(method, pattern, &block)
         @routes ||= {}
 
-        set_route(method, pattern, &block)
         set_route('HEAD', pattern, &block) if method == 'GET'
+        set_route(method, pattern, &block)
       end
 
       # Set routes Hash with the Route object.
