@@ -1,13 +1,108 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>MailGrabber</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/png" href="<%= root_path %>/images/mail_grabber515x500.png" />
     <link rel="stylesheet" href="<%= root_path %>/stylesheets/application.css" type="text/css" charset="utf-8">
+
+    <script src="<%= root_path %>/javascripts/application.js"></script>
   </head>
-  <body>
-    <div id="container">
-      <h1>Hello World!</h1>
-      <%= @all_message %>
+
+  <body data-root-path="<%= root_path %>">
+    <h1 class="border-bottom no-margin padding-20">
+      MailGr<img src="<%= root_path %>/images/mail_grabber515x500.png" height="22" />bber
+    </h1>
+
+    <div class="row height-90">
+      <div class="flex-30 border-right">
+        <ul class="no-bullet no-margin padding-20">
+          <div class="row">
+            <li class="flex-50 align-center border-bottom border-right border-top padding-16" data-content-type="message-reload-tab">
+              Reload
+            </li>
+            <li class="flex-50 align-center border-bottom border-top padding-16" data-content-type="message-clear-tab">
+              Clear
+            </li>
+          </div>
+        </ul>
+
+        <ul class="height-89_2 no-bullet no-margin padding-20 vertical-scroll" data-content-type="message-list">
+        </ul>
+      </div>
+
+      <div class="flex-70 padding-20 vertical-scroll" data-content-type="message-content" data-background-image="<%= root_path %>/images/mail_grabber515x500.png">
+      </div>
     </div>
+
+    <template data-content-type="message-list-template">
+      <li class="margin-bottom-10 border-bottom">
+        <div class="row">
+          <div class="flex-70" data-content-type="message-senders">
+          </div>
+
+          <time class="flex-30 align-right" data-content-type="message-sent-at">
+          </time>
+        </div>
+
+        <div class="margin-bottom-10" data-content-type="message-subject">
+        </div>
+      </li>
+    </template>
+
+    <template data-content-type="message-content-template">
+      <div class="border-bottom border-top padding-top-bottom-16" data-content-type="message-subject">
+      </div>
+
+      <div class="row border-bottom">
+        <div class="flex-70">
+          <dl data-content-type="metadata">
+          </dl>
+        </div>
+
+        <time class="flex-30 align-right padding-top-bottom-16" data-content-type="message-sent-at">
+        </time>
+      </div>
+
+      <ul class="row border-bottom no-bullet no-margin">
+        <div class="flex-70">
+          <div class="row">
+            <li class="active border-right padding-16" data-message-tab="html">
+              HTML
+            </li>
+            <li class="border-right padding-16" data-message-tab="text">
+              Plain text
+            </li>
+            <li class="border-right padding-16" data-message-tab="raw">
+              Raw
+            </li>
+          </div>
+        </div>
+
+        <div class="flex-30">
+          <div class="row">
+            <li class="border-left border-right margin-left-auto padding-16" data-content-type="message-delete-tab">
+              Delete
+            </li>
+            <li class="padding-16" data-content-type="message-close-tab">
+              Close
+            </li>
+          </div>
+        </div>
+      </ul>
+
+      <iframe class="padding-top-bottom-16" data-content-type="message-html-body" data-message-content="html">
+      </iframe>
+
+      <pre class="hide" data-content-type="message-text-body" data-message-content="text">
+      </pre>
+
+      <pre class="hide" data-content-type="message-raw-body" data-message-content="raw">
+      </pre>
+    </template>
   </body>
 </html>

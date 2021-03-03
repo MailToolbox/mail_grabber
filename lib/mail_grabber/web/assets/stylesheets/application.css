@@ -1,15 +1,121 @@
-body {
-  background-color: #4B7399;
-  font-family: Verdana;
-  font-size: 14px;
+* {
+  box-sizing: border-box;
 }
 
-#container {
-  width: 75%;
-  margin: 0 auto;
-  background-color: #FFF;
-  padding: 20px 40px;
-  border: solid 1px #black;
-  margin-top: 20px;
+html,
+body {
+  font-family: Arial;
+  margin: 0;
+  height: 100%;
 }
-a { color: #0000FF; }
+
+dt {
+  float: left;
+}
+
+dd {
+  margin: 0 0 0 50px;
+}
+
+iframe {
+  border: none;
+  width: 100%;
+}
+
+li {
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+}
+
+.flex-30 {
+  flex: 30%;
+}
+
+.flex-50 {
+  flex: 50%;
+}
+
+.flex-70 {
+  flex: 70%;
+}
+
+.active {
+  background-color: gray;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.border-bottom {
+  border-bottom: 1px solid;
+}
+
+.border-left {
+  border-left: 1px solid;
+}
+
+.border-right {
+  border-right: 1px solid;
+}
+
+.border-top {
+  border-top: 1px solid;
+}
+
+.display {
+  display: block;
+}
+
+.height-90 {
+  height: 90%;
+}
+
+.height-89_2 {
+  height: 89.2%;
+}
+
+.hide {
+  display: none;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+
+.margin-left-auto {
+  margin-left: auto;
+}
+
+.no-bullet {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.padding-16 {
+  padding: 16px;
+}
+
+.padding-20 {
+  padding: 20px;
+}
+
+.padding-top-bottom-16 {
+  padding: 16px 0;
+}
+
+.vertical-scroll {
+  overflow-y: scroll;
+}

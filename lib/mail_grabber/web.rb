@@ -18,7 +18,7 @@ module MailGrabber
     def app
       @app ||= Rack::Builder.new do
         use Rack::Static,
-            urls: ['/stylesheets'],
+            urls: ['/images', '/javascripts', '/stylesheets'],
             root: File.expand_path('web/assets', __dir__)
 
         run Web::Application
