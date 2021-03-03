@@ -3,6 +3,7 @@
 require 'erb'
 require 'rack'
 
+require 'mail_grabber/error'
 require 'mail_grabber/database_helper'
 
 require 'mail_grabber/web/application_helper'
