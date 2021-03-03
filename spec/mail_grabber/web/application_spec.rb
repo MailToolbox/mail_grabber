@@ -4,10 +4,13 @@ require 'spec_helper'
 
 RSpec.describe MailGrabber::Web::Application do
   let(:path_info) { '/' }
+  let(:query_string) { '' }
+  let(:request_method) { 'GET' }
   let(:env) do
     {
       'PATH_INFO' => path_info,
-      'REQUEST_METHOD' => 'GET',
+      'QUERY_STRING' => query_string,
+      'REQUEST_METHOD' => request_method,
       'SCRIPT_NAME' => '',
       'rack.input' => StringIO.new(+'')
     }
@@ -71,7 +74,7 @@ RSpec.describe MailGrabber::Web::Application do
     end
 
     context 'when path is matching and it has params' do
-      let(:path_info) { '/test/1' }
+      let(:path_info) { '/message/1.json' }
 
       it 'returns with params hash' do
         expect(params_method).to eq({ 'request_params' => { 'id' => '1' } })
@@ -88,10 +91,10 @@ RSpec.describe MailGrabber::Web::Application do
   end
 
   describe '#request_method' do
-    subject(:request_method) { described_class.new(env).request_method }
+    subject(:request_method_method) { described_class.new(env).request_method }
 
     it 'returns with the request method from the given env' do
-      expect(request_method).to eq('GET')
+      expect(request_method_method).to eq('GET')
     end
   end
 
@@ -122,6 +125,153 @@ RSpec.describe MailGrabber::Web::Application do
       end
     end
   end
+
+  describe 'get /' do
+    subject(:get_main) { described_class.call(env) }
+
+    let(:path_info) { '/' }
+
+    it 'returns with an Array' do
+      expect(get_main).to be_a_kind_of(Array)
+    end
+
+    it 'returns with status 200' do
+      expect(get_main[0]).to eq(200)
+    end
+
+    it 'renders the template' do
+      expect(get_main[2][0]).to match(/<!DOCTYPE html>/)
+    end
+  end
+
+  # rubocop:disable RSpec/AnyInstance
+  describe 'get /messages.json' do
+    subject(:get_messages) { described_class.call(env) }
+
+    let(:path_info) { '/messages.json' }
+    let(:response) { [{ id: 1, subject: 'test', senders: 'test@test.com' }] }
+
+    shared_examples 'an expected JSON response' do
+      it 'returns with an Array' do
+        expect(get_messages).to be_a_kind_of(Array)
+      end
+
+      it 'returns with status 200' do
+        expect(get_messages[0]).to eq(200)
+      end
+
+      it 'renders the right JSON response' do
+        expect(get_messages[2][0]).to eq(response.to_json)
+      end
+    end
+
+    context 'when both page, per_page parameteres are missing' do
+      before do
+        allow_any_instance_of(described_class).to receive(:select_all_messages)
+          .and_return(response)
+      end
+
+      it_behaves_like 'an expected JSON response'
+    end
+
+    context 'when one of the page or per_page parameteres is missing' do
+      before do
+        allow_any_instance_of(described_class).to receive(:select_all_messages)
+          .and_return(response)
+      end
+
+      let(:query_string) { 'page=1' }
+
+      it_behaves_like 'an expected JSON response'
+    end
+
+    context 'when page, per_page parameters are exist' do
+      before do
+        allow_any_instance_of(described_class).to receive(:select_messages_by)
+          .and_return(response)
+      end
+
+      let(:query_string) { 'page=1&per_page=1' }
+
+      it_behaves_like 'an expected JSON response'
+    end
+  end
+
+  describe 'get /message/:id.json' do
+    subject(:get_message) { described_class.call(env) }
+
+    before do
+      allow_any_instance_of(described_class).to receive(:select_message_by)
+        .and_return(message)
+      allow_any_instance_of(described_class)
+        .to receive(:select_message_parts_by)
+        .and_return(message_parts)
+    end
+
+    let(:path_info) { '/message/1.json' }
+    let(:message) { { id: 1, subject: 'test', senders: 'test@test.com' } }
+    let(:message_parts) { [{ id: 1, mail_id: 1, body: 'test' }] }
+    let(:response) { { message: message, message_parts: message_parts } }
+
+    it 'returns with an Array' do
+      expect(get_message).to be_a_kind_of(Array)
+    end
+
+    it 'returns with status 200' do
+      expect(get_message[0]).to eq(200)
+    end
+
+    it 'renders the right JSON response' do
+      expect(get_message[2][0]).to eq(response.to_json)
+    end
+  end
+
+  describe 'delete /messages.json' do
+    subject(:delete_messages) { described_class.call(env) }
+
+    before do
+      allow_any_instance_of(described_class).to receive(:delete_all_messages)
+    end
+
+    let(:path_info) { '/messages.json' }
+    let(:request_method) { 'DELETE' }
+
+    it 'returns with an Array' do
+      expect(delete_messages).to be_a_kind_of(Array)
+    end
+
+    it 'returns with status 200' do
+      expect(delete_messages[0]).to eq(200)
+    end
+
+    it 'renders the right JSON response' do
+      expect(delete_messages[2][0]).to eq('All messages have been deleted')
+    end
+  end
+
+  describe 'delete /message/:id.json' do
+    subject(:delete_message) { described_class.call(env) }
+
+    before do
+      allow_any_instance_of(described_class).to receive(:delete_message_by)
+    end
+
+    let(:path_info) { '/message/1.json' }
+    let(:request_method) { 'DELETE' }
+
+    it 'returns with an Array' do
+      expect(delete_message).to be_a_kind_of(Array)
+    end
+
+    it 'returns with status 200' do
+      expect(delete_message[0]).to eq(200)
+    end
+
+    it 'renders the right JSON response' do
+      expect(delete_message[2][0]).to eq('Message has been deleted')
+    end
+  end
+  # rubocop:enable RSpec/AnyInstance
 
   describe '#render' do
     subject(:render_method) do

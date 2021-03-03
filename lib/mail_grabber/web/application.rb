@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module MailGrabber
   module Web
     class Application
@@ -80,12 +82,39 @@ module MailGrabber
       end
 
       get '/' do
-        @all_message = all_message
         response.write(render('index.html.erb'))
       end
 
-      get '/test/:id' do
-        response.write("test id: #{params['request_params']['id'].inspect}")
+      get '/messages.json' do
+        result =
+          if params['page'].nil? || params['per_page'].nil?
+            select_all_messages
+          else
+            select_messages_by(params['page'], params['per_page'])
+          end
+
+        response.write(result.to_json)
+      end
+
+      get '/message/:id.json' do
+        message = select_message_by(params['request_params']['id'])
+        message_parts = select_message_parts_by(params['request_params']['id'])
+
+        response.write(
+          { message: message, message_parts: message_parts }.to_json
+        )
+      end
+
+      delete '/messages.json' do
+        delete_all_messages
+
+        response.write('All messages have been deleted')
+      end
+
+      delete '/message/:id.json' do
+        delete_message_by(params['request_params']['id'])
+
+        response.write('Message has been deleted')
       end
 
       # Render erb template from the views folder.
