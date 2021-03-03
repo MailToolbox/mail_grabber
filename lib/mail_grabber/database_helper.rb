@@ -1,154 +1,238 @@
 # frozen_string_literal: true
 
+require 'base64'
 require 'sqlite3'
+
+require 'mail_grabber/database_queries'
 
 module MailGrabber
   module DatabaseHelper
-    # Need documentation
-    def store_message(message)
-      insert_into_mail.execute(
+    include DatabaseQueries
+
+    DATABASE = {
+      folder: 'tmp',
+      filename: 'mail_grabber.sqlite3',
+      params: {
+        type_translation: true,
+        results_as_hash: true
+      }
+    }.freeze
+
+    # Create connection to the SQLite3 database. Use foreign_keys pragmas and
+    # it accepts block to execute queries. If something goes wrong then it raise
+    # database helper error. Also ensure to close the database (important to
+    # close database if we are don't want to see database busy errors).
+    def connection
+      database = open_database
+      database.foreign_keys = 'ON'
+
+      yield database
+    rescue SQLite3::Exception => e
+      raise Error::DatabaseHelperError, e
+    ensure
+      database&.close
+    end
+
+    # Create connection and execute a query.
+    #
+    # @param [String] query which query we would like to execute
+    # @param [Array] args any other arguments
+    def connection_execute(query, *args)
+      connection { |db| db.execute(query, *args) }
+    end
+
+    # Create connection and execute many queries in transaction. It accepts
+    # block to execute queries. If something goes wrong it rolls back the
+    # changes and raise database helper error.
+    def connection_execute_transaction
+      connection do |db|
+        db.transaction
+
+        yield db
+
+        db.commit
+      rescue SQLite3::Exception => e
+        db.rollback
+
+        raise Error::DatabaseHelperError, e
+      end
+    end
+
+    # Helper method to delete all messages.
+    def delete_all_messages
+      connection_execute('DELETE FROM mail')
+    end
+
+    # Helper method to delete a message.
+    #
+    # @param [String/Integer] id the identifier of the message
+    def delete_message_by(id)
+      connection_execute('DELETE FROM mail WHERE id = ?', id)
+    end
+
+    # Helper method to get all messages.
+    def select_all_messages
+      connection_execute('SELECT * FROM mail ORDER BY id DESC, created_at DESC')
+    end
+
+    # Helper method to get a message.
+    #
+    # @param [String/Integer] id the identifier of the message
+    def select_message_by(id)
+      connection_execute('SELECT * FROM mail WHERE id = ?', id).first
+    end
+
+    # Helper method to get a message part.
+    #
+    # @param [String/Integer] id the identifier of the message part
+    def select_message_parts_by(id)
+      connection_execute('SELECT * FROM mail_part WHERE mail_id = ?', id)
+    end
+
+    # Helper method to get a specific number of messages. We can specify which
+    # part of table and how many messages want to see.
+    #
+    # @param [String/Integer] page which part of the table want to see
+    # @param [String/Integer] per_page how many messages gives back
+    def select_messages_by(page, per_page)
+      page = page.to_i
+      per_page = per_page.to_i
+
+      connection_execute(
+        select_messages_with_pagination_query,
+        per_page * (page - 1),
+        per_page
+      )
+    end
+
+    # Helper method to store a message in the database.
+    #
+    # @param [Mail::Message] message which we would like to store
+    def store_mail(message)
+      connection_execute_transaction do |db|
+        insert_into_mail(db, message)
+
+        insert_into_mail_part(db, message)
+      end
+    end
+
+    private
+
+    # Check that the given Mail::Part is an attachment or not.
+    #
+    # @param [Mail::Part] object
+    #
+    # @return [Boolean] true if it is an attachment, else false
+    def attachment?(object)
+      object.attachment? ? 1 : 0
+    end
+
+    # Convert the given message or body to utf8 string. Needs this that we can
+    # send it as JSON.
+    #
+    # @param [Mail::Message/Mail::Body] object
+    #
+    # @return [String] which we can store to database and send as JSON
+    def convert_to_utf8_string(object)
+      object.to_s.force_encoding('UTF-8')
+    end
+
+    # Extract cid value from the Mail::Part.
+    #
+    # @param [Mail::Part] object
+    #
+    # @return [String] the cid value
+    def extract_cid(object)
+      object.cid if object.respond_to?(:cid)
+    end
+
+    # Extract all parts from the Mail::Message object. If it is not multipart
+    # then it returns back with original object in an Array.
+    #
+    # @param [Mail::Message] message
+    #
+    # @return [Array] with parts of the message or an Array with the message
+    def extract_mail_parts(message)
+      message.multipart? ? message.all_parts : [message]
+    end
+
+    # Extract MIME type of the Mail::Part object. If it is nil then it returns
+    # with text/plain value.
+    #
+    # @param [Mail::Part] object
+    #
+    # @return [String] with MIME type of the part
+    def extract_mime_type(object)
+      object.mime_type || 'text/plain'
+    end
+
+    # Check that the given Mail::Part is an inline attachment or not.
+    #
+    # @param [Mail::Part] object
+    #
+    # @return [Boolean] true if it is an inline attachment, else false
+    def inline?(object)
+      object.respond_to?(:inline?) && object.inline? ? 1 : 0
+    end
+
+    # Store Mail::Message in the database.
+    #
+    # @param [SQLite::Database] db
+    # @param [Mail::Message] message
+    def insert_into_mail(db, message)
+      db.execute(
+        insert_into_mail_query,
+        message.subject,
+        message.from&.join(', '),
         message.to&.join(', '),
         message.cc&.join(', '),
         message.bcc&.join(', '),
-        message.subject,
-        message.from&.join(', '),
-        message.to_s
+        convert_to_utf8_string(message)
       )
-
-      store_message_part(message)
     end
 
-    # Need documentation
-    def store_message_part(message)
-      extract_message_parts(message).each do |part|
-        body = part.body.to_s
+    # Store Mail::Part in the database.
+    #
+    # @param [SQLite::Database] db
+    # @param [Mail::Message] message
+    def insert_into_mail_part(db, message)
+      mail_id = db.last_insert_row_id
 
-        insert_into_mail_part.execute(
-          database.last_insert_row_id,
+      extract_mail_parts(message).each do |part|
+        body = convert_to_utf8_string(part.body)
+
+        db.execute(
+          insert_into_mail_part_query,
+          mail_id,
           extract_cid(part),
           extract_mime_type(part),
           attachment?(part),
           inline?(part),
           part.filename,
           part.charset,
-          body,
+          Base64.encode64(body),
           body.length
         )
       end
     end
 
-    # Need documentation
-    def all_message
-      select_all_mail.execute.map { |row| row }
-    end
+    # Open a database connection with the database. Also it checks that the
+    # database is exist or not. If it does not exist then it creates a new one.
+    #
+    # @return [SQLite3::Database] a database object
+    def open_database
+      db_location = "#{DATABASE[:folder]}/#{DATABASE[:filename]}"
 
-    private
+      if File.exist?(db_location)
+        SQLite3::Database.new(db_location, **DATABASE[:params])
+      else
+        Dir.mkdir(DATABASE[:folder]) unless Dir.exist?(DATABASE[:folder])
 
-    def attachment?(object)
-      object.attachment? ? 1 : 0
-    end
-
-    def extract_cid(object)
-      object.cid if object.respond_to?(:cid)
-    end
-
-    def extract_message_parts(message)
-      message.multipart? ? message.all_parts : [message]
-    end
-
-    def extract_mime_type(object)
-      object.mime_type || 'text/plain'
-    end
-
-    def inline?(object)
-      object.respond_to?(:inline) && object.inline? ? 1 : 0
-    end
-
-    def database
-      Dir.mkdir('tmp') unless Dir.exist?('tmp')
-
-      @database ||= begin
-        SQLite3::Database.new('tmp/mail_grabber.sqlite3',
-                              type_translation: true,
-                              results_as_hash: true).tap do |db|
+        SQLite3::Database.new(db_location, **DATABASE[:params]).tap do |db|
           create_mail_table(db)
           create_mail_part_table(db)
         end
       end
-    end
-
-    def create_mail_table(db)
-      db.execute(<<-SQL)
-        CREATE TABLE IF NOT EXISTS mail (
-          id INTEGER PRIMARY KEY ASC,
-          mail_to TEXT,
-          mail_cc TEXT,
-          mail_bcc TEXT,
-          mail_subject TEXT,
-          mail_from TEXT,
-          raw_mail BLOB,
-          created_at DATETIME DEFAULT CURRENT_DATETIME
-        )
-      SQL
-    end
-
-    def create_mail_part_table(db)
-      db.execute(<<-SQL)
-        CREATE TABLE IF NOT EXISTS mail_part (
-          id INTEGER PRIMARY KEY ASC,
-          mail_id INTEGER NOT NULL,
-          cid TEXT,
-          mime_type TEXT,
-          is_attachment INTEGER,
-          is_inline INTEGER,
-          filename TEXT,
-          charset TEXT,
-          body BLOB,
-          size INTEGER,
-          created_at DATETIME DEFAULT CURRENT_DATETIME,
-          FOREIGN KEY (mail_id) REFERENCES mail (id) ON DELETE CASCADE
-        )
-      SQL
-    end
-
-    def insert_into_mail
-      @insert_into_mail ||=
-        database.prepare(<<-SQL)
-          INSERT INTO mail (
-            mail_to,
-            mail_cc,
-            mail_bcc,
-            mail_subject,
-            mail_from,
-            raw_mail,
-            created_at
-          )
-          VALUES (?, ?, ?, ?, ?, ?, datetime('now'))
-        SQL
-    end
-
-    def insert_into_mail_part
-      @insert_into_mail_part ||=
-        database.prepare(<<-SQL)
-          INSERT INTO mail_part (
-            mail_id,
-            cid,
-            mime_type,
-            is_attachment,
-            is_inline,
-            filename,
-            charset,
-            body,
-            size,
-            created_at
-          )
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
-        SQL
-    end
-
-    def select_all_mail
-      @select_all_mail ||=
-        database.prepare('SELECT * FROM mail ORDER BY created_at DESC')
     end
   end
 end
