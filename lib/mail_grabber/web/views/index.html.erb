@@ -22,16 +22,16 @@
       <div class="flex-30 border-right">
         <ul class="no-bullet no-margin padding-20">
           <div class="row">
-            <li class="flex-50 align-center border-bottom border-right border-top padding-16" data-content-type="message-reload-tab">
+            <li class="flex-50 align-center background-color-light-green border-bottom border-right border-top cursor-pointer padding-16" data-content-type="message-reload-tab">
               Reload
             </li>
-            <li class="flex-50 align-center border-bottom border-top padding-16" data-content-type="message-clear-tab">
+            <li class="flex-50 align-center background-color-light-red border-bottom border-top cursor-pointer padding-16" data-content-type="message-clear-tab">
               Clear
             </li>
           </div>
         </ul>
 
-        <ul class="height-89_2 no-bullet no-margin padding-20 vertical-scroll" data-content-type="message-list">
+        <ul class="height-89_2 line-height-1_5 no-bullet no-margin padding-20 vertical-scroll" data-content-type="message-list">
         </ul>
       </div>
 
@@ -40,7 +40,7 @@
     </div>
 
     <template data-content-type="message-list-template">
-      <li class="margin-bottom-10 border-bottom">
+      <li class="cursor-pointer border-bottom padding-top-bottom-10">
         <div class="row">
           <div class="flex-70" data-content-type="message-senders">
           </div>
@@ -49,7 +49,7 @@
           </time>
         </div>
 
-        <div class="margin-bottom-10" data-content-type="message-subject">
+        <div data-content-type="message-subject">
         </div>
       </li>
     </template>
@@ -58,7 +58,7 @@
       <div class="border-bottom border-top padding-top-bottom-16" data-content-type="message-subject">
       </div>
 
-      <div class="row border-bottom">
+      <div class="row border-bottom line-height-1_5">
         <div class="flex-70">
           <dl data-content-type="metadata">
           </dl>
@@ -71,13 +71,13 @@
       <ul class="row border-bottom no-bullet no-margin">
         <div class="flex-70">
           <div class="row">
-            <li class="active border-right padding-16" data-message-tab="html">
+            <li class="active border-right cursor-pointer padding-16" data-message-tab="html">
               HTML
             </li>
-            <li class="border-right padding-16" data-message-tab="text">
+            <li class="border-right cursor-pointer padding-16" data-message-tab="text">
               Plain text
             </li>
-            <li class="border-right padding-16" data-message-tab="raw">
+            <li class="border-right cursor-pointer padding-16" data-message-tab="raw">
               Raw
             </li>
           </div>
@@ -85,10 +85,10 @@
 
         <div class="flex-30">
           <div class="row">
-            <li class="border-left border-right margin-left-auto padding-16" data-content-type="message-delete-tab">
+            <li class="background-color-light-red border-left border-right cursor-pointer margin-left-auto padding-16" data-content-type="message-delete-tab">
               Delete
             </li>
-            <li class="padding-16" data-content-type="message-close-tab">
+            <li class="cursor-pointer background-color-light-blue padding-16" data-content-type="message-close-tab">
               Close
             </li>
           </div>

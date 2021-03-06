@@ -10,7 +10,9 @@ body {
 }
 
 dt {
+  color: #999999;
   float: left;
+  font-weight: bold;
 }
 
 dd {
@@ -22,8 +24,13 @@ iframe {
   width: 100%;
 }
 
-li {
-  cursor: pointer;
+time {
+  font-size: 0.9em;
+  color: #999999;
+}
+
+[data-content-type="message-list"] li:hover {
+  background-color: #f2f2f2;
 }
 
 .row {
@@ -43,7 +50,7 @@ li {
 }
 
 .active {
-  background-color: gray;
+  background-color: #cccccc;
 }
 
 .align-right {
@@ -52,6 +59,18 @@ li {
 
 .align-center {
   text-align: center;
+}
+
+.background-color-light-blue {
+  background-color: #ccebff;
+}
+
+.background-color-light-green {
+  background-color: #d6f5d6;
+}
+
+.background-color-light-red {
+  background-color: #ffcccc;
 }
 
 .border-bottom {
@@ -70,8 +89,12 @@ li {
   border-top: 1px solid;
 }
 
-.display {
-  display: block;
+.color-black {
+  color: black;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .height-90 {
@@ -86,8 +109,8 @@ li {
   display: none;
 }
 
-.margin-bottom-10 {
-  margin-bottom: 10px;
+.line-height-1_5 {
+  line-height: 1.5em;
 }
 
 .margin-left-auto {
@@ -104,12 +127,20 @@ li {
   margin: 0;
 }
 
+.no-text-decoration {
+  text-decoration: none;
+}
+
 .padding-16 {
   padding: 16px;
 }
 
 .padding-20 {
   padding: 20px;
+}
+
+.padding-top-bottom-10 {
+  padding: 10px 0;
 }
 
 .padding-top-bottom-16 {
