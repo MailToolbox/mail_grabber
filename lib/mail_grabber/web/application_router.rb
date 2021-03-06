@@ -15,7 +15,7 @@ module MailGrabber
           # it will match with the '/test/:id' pattern. In this case it will
           # return with '{"id" => "1"}' hash. If it is just a simple path like
           # '/' and it has a pattern to match then it will return with '{}'.
-          # In the other case it will retrun with nil.
+          # In the other case it will return with nil.
           #
           # @param [String] path
           #

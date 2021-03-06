@@ -18,10 +18,11 @@ module MailGrabber
       }
     }.freeze
 
-    # Create connection to the SQLite3 database. Use foreign_keys pragmas and
-    # it accepts block to execute queries. If something goes wrong then it raise
-    # database helper error. Also ensure to close the database (important to
-    # close database if we are don't want to see database busy errors).
+    # Create connection to the SQLite3 database. Use foreign_keys pragmas that
+    # we can use DELETE CASCADE option. It accepts block to execute queries.
+    # If something goes wrong then it raise database helper error.
+    # Also ensure to close the database (important to close database if we are
+    # don't want to see database busy errors).
     def connection
       database = open_database
       database.foreign_keys = 'ON'
@@ -36,7 +37,7 @@ module MailGrabber
     # Create connection and execute a query.
     #
     # @param [String] query which query we would like to execute
-    # @param [Array] args any other arguments
+    # @param [Array] args any arguments which we will use in the query
     def connection_execute(query, *args)
       connection { |db| db.execute(query, *args) }
     end
@@ -90,7 +91,7 @@ module MailGrabber
     end
 
     # Helper method to get a specific number of messages. We can specify which
-    # part of table and how many messages want to see.
+    # part of the table we need and how many messages want to see.
     #
     # @param [String/Integer] page which part of the table want to see
     # @param [String/Integer] per_page how many messages gives back
@@ -132,7 +133,7 @@ module MailGrabber
     #
     # @param [Mail::Message/Mail::Body] object
     #
-    # @return [String] which we can store to database and send as JSON
+    # @return [String] which we can store in the database and send as JSON
     def convert_to_utf8_string(object)
       object.to_s.force_encoding('UTF-8')
     end
@@ -151,7 +152,7 @@ module MailGrabber
     #
     # @param [Mail::Message] message
     #
-    # @return [Array] with parts of the message or an Array with the message
+    # @return [Array] with all parts of the message or an Array with the message
     def extract_mail_parts(message)
       message.multipart? ? message.all_parts : [message]
     end

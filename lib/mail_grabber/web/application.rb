@@ -16,6 +16,9 @@ module MailGrabber
       # initialize method and returns back with response of the application.
       #
       # @param [Hash] env the environment variables
+      #
+      # @return [Array] the response of the web application
+      #   e.g. [200, {}, ['Hello World']]
       def self.call(env)
         new(env).response.finish
       end
@@ -34,7 +37,8 @@ module MailGrabber
       # Extract env['PATH_INFO'] value. If the path info is empty then it will
       # return with root path.
       #
-      # @return [String] path the requested path or root if this value is empty
+      # @return [String] path the requested path or the root path if this value
+      #   is empty
       def path
         @path ||= request.path_info.empty? ? '/' : request.path_info
       end
@@ -55,7 +59,7 @@ module MailGrabber
 
       # Extract env['SCRIPT_NAME'] value.
       #
-      # @return [String] script_name the initial portion of the request "path"
+      # @return [String] script_name the initial portion of the request 'path'
       def script_name
         request.script_name
       end
@@ -63,9 +67,9 @@ module MailGrabber
       # Parse the routes of the ApplicationRouter and tries to find matching
       # route for the request method, which was defined in the
       # get, post, put, patch or delete blocks. If the 'extracted_params' is nil
-      # then it could not found any defined routes. If can find a defined route
-      # then it saves the params and call the given block. If it cannot find
-      # anything the it will set response with 404 Not Found.
+      # then it could not found any defined routes. If it can find a defined
+      # route then it saves the params and call the given block. If it cannot
+      # find anything then it will set response with 404 Not Found.
       def process_request
         self.class.routes[request_method].each do |route|
           extracted_params = route.extract_params(path)

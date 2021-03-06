@@ -4,7 +4,7 @@ module MailGrabber
   class DeliveryMethod
     include DatabaseHelper
 
-    # Catch and save messages into a database that we can check those messages
+    # Catch and save messages into the database that we can check those messages
     # in MailGrabber web application.
     #
     # @param [Mail::Message] message what we would like to send
