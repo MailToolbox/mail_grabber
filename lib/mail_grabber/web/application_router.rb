@@ -23,9 +23,10 @@ module MailGrabber
           #   or nil
           def extract_params(path)
             if pattern.match?(NAMED_SEGMENTS_PATTERN)
-              p = pattern.gsub(NAMED_SEGMENTS_PATTERN, '/\1(?<\2>[^$/]+)')
+              named_pattern =
+                pattern.gsub(NAMED_SEGMENTS_PATTERN, '/\1(?<\2>[^$/]+)')
 
-              path.match(Regexp.new("\\A#{p}\\Z"))&.named_captures
+              path.match(Regexp.new("\\A#{named_pattern}\\Z"))&.named_captures
             elsif path == pattern
               {}
             end

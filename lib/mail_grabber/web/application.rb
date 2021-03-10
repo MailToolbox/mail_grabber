@@ -112,13 +112,13 @@ module MailGrabber
       delete '/messages.json' do
         delete_all_messages
 
-        response.write('All messages have been deleted')
+        response.write({ info: 'All messages have been deleted' }.to_json)
       end
 
       delete '/message/:id.json' do
         delete_message_by(params['request_params']['id'])
 
-        response.write('Message has been deleted')
+        response.write({ info: 'Message has been deleted' }.to_json)
       end
 
       # Render erb template from the views folder.

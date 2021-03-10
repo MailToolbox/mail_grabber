@@ -144,26 +144,26 @@ RSpec.describe MailGrabber::Web::Application do
     end
   end
 
+  shared_examples 'an expected JSON response' do
+    it 'returns with an Array' do
+      expect(subject).to be_a_kind_of(Array)
+    end
+
+    it 'returns with status 200' do
+      expect(subject[0]).to eq(200)
+    end
+
+    it 'renders the right JSON response' do
+      expect(subject[2][0]).to eq(response.to_json)
+    end
+  end
+
   # rubocop:disable RSpec/AnyInstance
   describe 'get /messages.json' do
     subject(:get_messages) { described_class.call(env) }
 
     let(:path_info) { '/messages.json' }
     let(:response) { [{ id: 1, subject: 'test', senders: 'test@test.com' }] }
-
-    shared_examples 'an expected JSON response' do
-      it 'returns with an Array' do
-        expect(get_messages).to be_a_kind_of(Array)
-      end
-
-      it 'returns with status 200' do
-        expect(get_messages[0]).to eq(200)
-      end
-
-      it 'renders the right JSON response' do
-        expect(get_messages[2][0]).to eq(response.to_json)
-      end
-    end
 
     context 'when both page, per_page parameteres are missing' do
       before do
@@ -213,17 +213,7 @@ RSpec.describe MailGrabber::Web::Application do
     let(:message_parts) { [{ id: 1, mail_id: 1, body: 'test' }] }
     let(:response) { { message: message, message_parts: message_parts } }
 
-    it 'returns with an Array' do
-      expect(get_message).to be_a_kind_of(Array)
-    end
-
-    it 'returns with status 200' do
-      expect(get_message[0]).to eq(200)
-    end
-
-    it 'renders the right JSON response' do
-      expect(get_message[2][0]).to eq(response.to_json)
-    end
+    it_behaves_like 'an expected JSON response'
   end
 
   describe 'delete /messages.json' do
@@ -235,18 +225,9 @@ RSpec.describe MailGrabber::Web::Application do
 
     let(:path_info) { '/messages.json' }
     let(:request_method) { 'DELETE' }
+    let(:response) { { info: 'All messages have been deleted' } }
 
-    it 'returns with an Array' do
-      expect(delete_messages).to be_a_kind_of(Array)
-    end
-
-    it 'returns with status 200' do
-      expect(delete_messages[0]).to eq(200)
-    end
-
-    it 'renders the right JSON response' do
-      expect(delete_messages[2][0]).to eq('All messages have been deleted')
-    end
+    it_behaves_like 'an expected JSON response'
   end
 
   describe 'delete /message/:id.json' do
@@ -258,18 +239,9 @@ RSpec.describe MailGrabber::Web::Application do
 
     let(:path_info) { '/message/1.json' }
     let(:request_method) { 'DELETE' }
+    let(:response) { { info: 'Message has been deleted' } }
 
-    it 'returns with an Array' do
-      expect(delete_message).to be_a_kind_of(Array)
-    end
-
-    it 'returns with status 200' do
-      expect(delete_message[0]).to eq(200)
-    end
-
-    it 'renders the right JSON response' do
-      expect(delete_message[2][0]).to eq('Message has been deleted')
-    end
+    it_behaves_like 'an expected JSON response'
   end
   # rubocop:enable RSpec/AnyInstance
 
