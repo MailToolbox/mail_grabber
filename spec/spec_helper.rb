@@ -6,9 +6,17 @@ require 'simplecov'
 SimpleCov.start
 
 require 'bundler/setup'
+require 'capybara/apparition'
+require 'capybara/rspec'
 require 'mail_grabber'
 require 'mail_grabber/web'
 require 'mail'
+
+Capybara.javascript_driver = :apparition
+Capybara.default_driver = Capybara.javascript_driver
+Capybara.save_path = 'tmp'
+Capybara.app = MailGrabber::Web
+Capybara.server = :webrick
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
