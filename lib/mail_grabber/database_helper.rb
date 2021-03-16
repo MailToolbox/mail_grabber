@@ -68,7 +68,7 @@ module MailGrabber
     #
     # @param [String/Integer] id the identifier of the message
     def delete_message_by(id)
-      connection_execute('DELETE FROM mail WHERE id = ?', id)
+      connection_execute('DELETE FROM mail WHERE id = ?', id.to_i)
     end
 
     # Helper method to get all messages.
@@ -80,14 +80,14 @@ module MailGrabber
     #
     # @param [String/Integer] id the identifier of the message
     def select_message_by(id)
-      connection_execute('SELECT * FROM mail WHERE id = ?', id).first
+      connection_execute('SELECT * FROM mail WHERE id = ?', id.to_i).first
     end
 
     # Helper method to get a message part.
     #
     # @param [String/Integer] id the identifier of the message part
     def select_message_parts_by(id)
-      connection_execute('SELECT * FROM mail_part WHERE mail_id = ?', id)
+      connection_execute('SELECT * FROM mail_part WHERE mail_id = ?', id.to_i)
     end
 
     # Helper method to get a specific number of messages. We can specify which
