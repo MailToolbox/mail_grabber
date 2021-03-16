@@ -123,7 +123,7 @@ module MailGrabber
     #
     # @param [Mail::Part] object
     #
-    # @return [Boolean] true if it is an attachment, else false
+    # @return [Integer] 1 if it is an attachment, else 0
     def attachment?(object)
       object.attachment? ? 1 : 0
     end
@@ -171,7 +171,7 @@ module MailGrabber
     #
     # @param [Mail::Part] object
     #
-    # @return [Boolean] true if it is an inline attachment, else false
+    # @return [Integer] 1 if it is an inline attachment, else 0
     def inline?(object)
       object.respond_to?(:inline?) && object.inline? ? 1 : 0
     end
