@@ -4,6 +4,9 @@ module MailGrabber
   class DeliveryMethod
     include DatabaseHelper
 
+    # Initialize MailGrabber delivery method (Rails needs it).
+    def initialize(options = {}); end
+
     # Catch and save messages into the database that we can check those messages
     # in MailGrabber web application.
     #
