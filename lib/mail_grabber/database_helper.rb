@@ -138,6 +138,17 @@ module MailGrabber
       object.to_s.force_encoding('UTF-8')
     end
 
+    # Encode the given decoded body with base64 encoding if Mail::Part is an
+    # attachment.
+    #
+    # @param [Mail::Part] object
+    # @param [String] string the decoded body of the Mail::Part
+    #
+    # @return [String] with the encoded or the original body
+    def encode_if_attachment(object, string)
+      object.attachment? ? Base64.encode64(string) : string
+    end
+
     # Extract cid value from the Mail::Part.
     #
     # @param [Mail::Part] object
@@ -200,7 +211,7 @@ module MailGrabber
       mail_id = db.last_insert_row_id
 
       extract_mail_parts(message).each do |part|
-        body = convert_to_utf8_string(part.body)
+        body = part.decoded
 
         db.execute(
           insert_into_mail_part_query,
@@ -211,7 +222,7 @@ module MailGrabber
           inline?(part),
           part.filename,
           part.charset,
-          Base64.encode64(body),
+          encode_if_attachment(part, body),
           body.length
         )
       end
