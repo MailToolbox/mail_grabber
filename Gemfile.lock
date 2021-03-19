@@ -83,6 +83,7 @@ GEM
     simplecov_json_formatter (0.1.2)
     sqlite3 (1.4.2)
     unicode-display_width (2.0.0)
+    webrick (1.7.0)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -102,6 +103,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rspec
   simplecov
+  webrick
 
 BUNDLED WITH
    2.2.4
