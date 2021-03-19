@@ -1,10 +1,51 @@
-Style/StringLiterals:
-  Enabled: true
-  EnforcedStyle: double_quotes
+require:
+  - rubocop-performance
+  - rubocop-rspec
 
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-  EnforcedStyle: double_quotes
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
 
 Layout/LineLength:
-  Max: 120
+  Max: 80
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/ModuleLength:
+  Max: 150
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: true
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/MessageChain:
+  Enabled: false
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/NestedGroups:
+  Enabled: false
