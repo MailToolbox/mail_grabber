@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 # Specify your gem's dependencies in mail_grabber.gemspec
 gemspec
 
-gem "rake", "~> 13.0"
+gem 'rake', '~> 13.0'
 
-gem "rspec", "~> 3.0"
+# Ruby static code analyzer and code formatter, code linter in short
+gem 'rubocop', '~> 1.11', require: false
+gem 'rubocop-performance', require: false
+gem 'rubocop-rspec', require: false
 
-gem "rubocop", "~> 0.80"
+gem 'rspec', '~> 3.0'
+gem 'simplecov', require: false
