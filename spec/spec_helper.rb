@@ -18,6 +18,15 @@ Capybara.save_path = 'tmp'
 Capybara.app = MailGrabber::Web
 Capybara.server = :webrick
 
+DBCONFIG = {
+  folder: 'tmp',
+  filename: 'mail_grabber_test.sqlite3',
+  params: {
+    type_translation: true,
+    results_as_hash: true
+  }
+}.freeze
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
@@ -27,5 +36,18 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.before do
+    stub_const('TestDbClass', Class.new { include MailGrabber::DatabaseHelper })
+    stub_const('MailGrabber::DatabaseHelper::DATABASE', DBCONFIG)
+  end
+
+  config.after { TestDbClass.new.delete_all_messages }
+
+  config.after(:suite) do
+    db_location = "#{DBCONFIG[:folder]}/#{DBCONFIG[:filename]}"
+
+    File.delete(db_location) if File.exist?(db_location)
   end
 end

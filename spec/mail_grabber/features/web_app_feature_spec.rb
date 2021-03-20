@@ -4,29 +4,13 @@ require 'spec_helper'
 
 RSpec.describe 'MailGrabber Web App', type: :feature do
   before do
-    stub_const('TestClass', Class.new { include MailGrabber::DatabaseHelper })
-    stub_const('MailGrabber::DatabaseHelper::DATABASE', dbconfig)
-
-    TestClass.new.store_mail(message)
+    TestDbClass.new.store_mail(message)
 
     visit '/'
   end
 
-  after do
-    File.delete("#{dbconfig[:folder]}/#{dbconfig[:filename]}")
-    File.delete('tmp/LICENSE.txt') if File.exist?('tmp/LICENSE.txt')
-  end
+  after { File.delete('tmp/LICENSE.txt') if File.exist?('tmp/LICENSE.txt') }
 
-  let(:dbconfig) do
-    {
-      folder: 'tmp',
-      filename: 'mail_grabber_test.sqlite3',
-      params: {
-        type_translation: true,
-        results_as_hash: true
-      }
-    }
-  end
   # rubocop:disable RSpec/VariableDefinition, RSpec/VariableName
   let(:message) do
     mail =
@@ -76,6 +60,10 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
     mail
   end
   # rubocop:enable RSpec/VariableDefinition, RSpec/VariableName
+
+  def message_count
+    TestDbClass.new.connection_execute('SELECT COUNT(*) AS count FROM mail')
+  end
 
   # rubocop:disable RSpec/ExampleLength
   it 'loads MailGrabber' do
@@ -217,9 +205,6 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
 
     context 'when clicks Delete tab' do
       it 'deletes the message' do
-        message_count =
-          TestClass.new.connection_execute('SELECT COUNT(*) AS count FROM mail')
-
         expect(message_count.first['count']).to eq(1)
 
         find(:xpath, '//li[@data-content-type="message-delete-tab"]').click
@@ -232,18 +217,12 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
           expect(page).to have_content('')
         end
 
-        message_count =
-          TestClass.new.connection_execute('SELECT COUNT(*) AS count FROM mail')
-
         expect(message_count.first['count']).to eq(0)
       end
     end
 
     context 'when clicks Close tab' do
       it 'closes the message' do
-        message_count =
-          TestClass.new.connection_execute('SELECT COUNT(*) AS count FROM mail')
-
         expect(message_count.first['count']).to eq(1)
 
         find(:xpath, '//li[@data-content-type="message-close-tab"]').click
@@ -251,9 +230,6 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
         within(:xpath, '//div[@data-content-type="message-content"]') do
           expect(page).to have_content('')
         end
-
-        message_count =
-          TestClass.new.connection_execute('SELECT COUNT(*) AS count FROM mail')
 
         expect(message_count.first['count']).to eq(1)
       end
@@ -280,9 +256,6 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
 
     context 'when clicks Clear tab' do
       it 'deletes all messages' do
-        message_count =
-          TestClass.new.connection_execute('SELECT COUNT(*) AS count FROM mail')
-
         expect(message_count.first['count']).to eq(1)
 
         find(:xpath, '//li[@data-content-type="message-clear-tab"]').click
@@ -294,9 +267,6 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
         within(:xpath, '//div[@data-content-type="message-content"]') do
           expect(page).to have_content('')
         end
-
-        message_count =
-          TestClass.new.connection_execute('SELECT COUNT(*) AS count FROM mail')
 
         expect(message_count.first['count']).to eq(0)
       end
