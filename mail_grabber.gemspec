@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Norbert Szivós']
   spec.email         = ['sysqa@yahoo.com']
 
-  spec.summary       = 'Grabs mails to inspect with MailGrabber.'
+  spec.summary       = 'Grab mails to inspect with MailGrabber.'
   spec.description   = 'Delivery Method to grab emails and inspect on a web ' \
                        'interface. We can use this Delivery Method with ' \
                        'Ruby on Rails ActionMailer or other solutions.'
