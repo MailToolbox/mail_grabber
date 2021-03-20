@@ -39,81 +39,8 @@
       </div>
     </div>
 
-    <template data-content-type="message-list-template">
-      <li class="cursor-pointer border-bottom padding-top-bottom-10">
-        <div class="row">
-          <div class="flex-70" data-content-type="message-senders">
-          </div>
-
-          <time class="flex-30 align-right color-gray font-size-0_9" data-content-type="message-sent-at">
-          </time>
-        </div>
-
-        <div data-content-type="message-subject">
-        </div>
-      </li>
-    </template>
-
-    <template data-content-type="message-content-template">
-      <div class="border-bottom border-top padding-top-bottom-16" data-content-type="message-subject">
-      </div>
-
-      <div class="row border-bottom line-height-1_5">
-        <div class="flex-70">
-          <dl data-content-type="metadata">
-          </dl>
-        </div>
-
-        <time class="flex-30 align-right color-gray font-size-0_9 padding-top-bottom-16" data-content-type="message-sent-at">
-        </time>
-      </div>
-
-      <ul class="border-bottom hide no-bullet no-margin padding-top-bottom-16" data-content-type="message-attachments">
-      </ul>
-
-      <ul class="row border-bottom no-bullet no-margin">
-        <div class="flex-70">
-          <div class="row">
-            <li class="active border-right cursor-pointer padding-16" data-message-tab="html">
-              HTML
-            </li>
-            <li class="border-right cursor-pointer padding-16" data-message-tab="text">
-              Plain text
-            </li>
-            <li class="border-right cursor-pointer padding-16" data-message-tab="raw">
-              Raw
-            </li>
-          </div>
-        </div>
-
-        <div class="flex-30">
-          <div class="row">
-            <li class="background-color-light-red border-left border-right cursor-pointer margin-left-auto padding-16" data-content-type="message-delete-tab">
-              Delete
-            </li>
-            <li class="cursor-pointer background-color-light-blue padding-16" data-content-type="message-close-tab">
-              Close
-            </li>
-          </div>
-        </div>
-      </ul>
-
-      <iframe class="padding-top-bottom-16" scrolling="no" data-content-type="message-html-body" data-message-content="html">
-      </iframe>
-
-      <pre class="hide" data-content-type="message-text-body" data-message-content="text">
-      </pre>
-
-      <pre class="hide" data-content-type="message-raw-body" data-message-content="raw">
-      </pre>
-    </template>
-
-    <template data-content-type="message-attachment-template">
-      <li data-content-type="message-attachment">
-        <span>
-          &#128206;
-        </span>
-      </li>
-    </template>
+    <%= render '_message_list_template.html.erb' %>
+    <%= render '_message_content_template.html.erb' %>
+    <%= render '_message_attachment_template.html.erb' %>
   </body>
 </html>
