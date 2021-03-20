@@ -8,10 +8,14 @@ Then change `config/application.rb` file.
 config.action_mailer.delivery_method = :mail_grabber
 ```
 
-Also add route that we can reach MailGrabber web interface.
+Also add route that we can reach MailGrabber web interface. Let's change `config/routes.rb` file.
 
 ```ruby
-mount MailGrabber::Web => '/mail_grabber'
+require 'mail_grabber/web'
+
+Rails.application.routes.draw do
+  mount MailGrabber::Web => '/mail_grabber'
+end
 ```
 
 So now we should add a mailer method. Let's create `app/mailers/test_mailer.rb` file.
