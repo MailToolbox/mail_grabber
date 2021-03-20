@@ -41,4 +41,10 @@ RSpec.describe MailGrabber::DeliveryMethod do
       end
     end
   end
+
+  describe '#settings' do
+    it 'returns with empty hash' do
+      expect(described_class.new.settings).to eq({})
+    end
+  end
 end

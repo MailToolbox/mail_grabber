@@ -19,5 +19,10 @@ module MailGrabber
 
       store_mail(message)
     end
+
+    # Delivery method settings (needed when run mail.deliver! method)
+    def settings
+      {}
+    end
   end
 end
