@@ -79,7 +79,7 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
 
   # rubocop:disable RSpec/ExampleLength
   it 'loads MailGrabber' do
-    expect(page).to have_css('h1', text: 'Mail')
+    expect(page).to have_css('h1', text: 'Grabber')
     expect(page).to have_css('li', text: 'Reload')
     expect(page).to have_css('li', text: 'Clear')
   end
