@@ -2,7 +2,7 @@
 
 Add `mail_grabber` gem to the `Gemfile` and run `bundle install`.
 
-Then change `config/application.rb` file.
+Then change `config/environments/development.rb` file.
 
 ```ruby
 config.action_mailer.delivery_method = :mail_grabber
