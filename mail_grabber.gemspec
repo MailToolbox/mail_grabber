@@ -26,7 +26,8 @@ Gem::Specification.new do |spec|
     'https://github.com/MailToolbox/mail_grabber/blob/main/CHANGELOG.md'
   spec.metadata['bug_tracker_uri'] =
     'https://github.com/MailToolbox/mail_grabber/issues'
-  spec.metadata['documentation_uri'] = 'https://rubydoc.info/gems/mail_grabber'
+  spec.metadata['documentation_uri'] =
+    'https://rubydoc.info/github/MailToolbox/mail_grabber/main'
 
   spec.files = %w[README.md CHANGELOG.md LICENSE.txt] + Dir.glob('lib/**/*')
   spec.require_paths = ['lib']
