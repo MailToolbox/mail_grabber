@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/mail_grabber.svg)](https://badge.fury.io/rb/mail_grabber)
 [![MIT license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/MailToolbox/mail_grabber/blob/main/LICENSE.txt)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop-hq/rubocop)
-[![Build Status](https://travis-ci.com/MailToolbox/mail_grabber.svg?branch=main)](https://travis-ci.com/MailToolbox/mail_grabber)
+[![MailGrabber CI](https://github.com/MailToolbox/mail_grabber/actions/workflows/mail_grabber_ci.yml/badge.svg)](https://github.com/MailToolbox/mail_grabber/actions/workflows/mail_grabber_ci.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/97deed5c1fbd003ca810/maintainability)](https://codeclimate.com/github/MailToolbox/mail_grabber/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/97deed5c1fbd003ca810/test_coverage)](https://codeclimate.com/github/MailToolbox/mail_grabber/test_coverage)
 
