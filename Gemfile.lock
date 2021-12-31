@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    mail_grabber (1.0.0)
+    mail_grabber (1.1.0)
       mail (~> 2.5)
       rack (~> 2.2)
       sqlite3 (~> 1.4)
