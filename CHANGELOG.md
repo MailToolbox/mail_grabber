@@ -1,5 +1,19 @@
 # Change log
 
+## 1.1.0 (2021-12-31)
+
+### Changes
+
+* Add Ruby 3.1 support.
+* Drop Ruby 2.5 support.
+* Replace Travis with GitHub Actions.
+* Update bundler and gems.
+
+### Bug fixes
+
+* Update apparition gem from github to fix issues.
+
+
 ## 1.0.0 (2021-04-02)
 
 ### Changes
