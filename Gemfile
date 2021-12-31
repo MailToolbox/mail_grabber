@@ -16,5 +16,6 @@ gem 'rubocop-rspec', require: false
 
 gem 'apparition', github: 'twalpole/apparition'
 gem 'capybara'
+gem 'net-smtp', require: false
 gem 'rspec', '~> 3.0'
 gem 'simplecov', require: false
