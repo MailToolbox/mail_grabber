@@ -27,12 +27,12 @@ RSpec.describe MailGrabber::Web::Application do
     subject(:init_method) { described_class.new(env) }
 
     it 'sets request with expected value' do
-      expect(init_method.instance_variable_get('@request'))
+      expect(init_method.instance_variable_get(:@request))
         .to be_a_kind_of(Rack::Request)
     end
 
     it 'sets response with expected value' do
-      expect(init_method.instance_variable_get('@response'))
+      expect(init_method.instance_variable_get(:@response))
         .to be_a_kind_of(Rack::Response)
     end
 
