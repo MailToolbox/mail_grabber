@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
     'https://github.com/MailToolbox/mail_grabber/issues'
   spec.metadata['documentation_uri'] =
     'https://rubydoc.info/github/MailToolbox/mail_grabber/main'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 
   spec.files = %w[README.md CHANGELOG.md LICENSE.txt] + Dir.glob('lib/**/*')
   spec.require_paths = ['lib']
