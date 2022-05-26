@@ -20,9 +20,9 @@ module MailGrabber
 
     # Create connection to the SQLite3 database. Use foreign_keys pragmas that
     # we can use DELETE CASCADE option. It accepts block to execute queries.
-    # If something goes wrong then it raise database helper error.
-    # Also ensure to close the database (important to close database if we are
-    # don't want to see database busy errors).
+    # If something goes wrong, then it raises a database helper error.
+    # Also ensure to close the database (important to close database if we don't
+    # want to see database busy errors).
     def connection
       database = open_database
       database.foreign_keys = 'ON'
@@ -43,8 +43,8 @@ module MailGrabber
     end
 
     # Create connection and execute many queries in transaction. It accepts
-    # block to execute queries. If something goes wrong it rolls back the
-    # changes and raise database helper error.
+    # block to execute queries. If something goes wrong, it rolls back the
+    # changes and raises a database helper error.
     def connection_execute_transaction
       connection do |db|
         db.transaction
@@ -158,8 +158,8 @@ module MailGrabber
       object.cid if object.respond_to?(:cid)
     end
 
-    # Extract all parts from the Mail::Message object. If it is not multipart
-    # then it returns back with original object in an Array.
+    # Extract all parts from the Mail::Message object. If it is not multipart,
+    # then it returns with the original object in an Array.
     #
     # @param [Mail::Message] message
     #
@@ -168,7 +168,7 @@ module MailGrabber
       message.multipart? ? message.all_parts : [message]
     end
 
-    # Extract MIME type of the Mail::Part object. If it is nil then it returns
+    # Extract MIME type of the Mail::Part object. If it is nil, then it returns
     # with text/plain value.
     #
     # @param [Mail::Part] object
@@ -228,8 +228,9 @@ module MailGrabber
       end
     end
 
-    # Open a database connection with the database. Also it checks that the
-    # database is exist or not. If it does not exist then it creates a new one.
+    # Open a database connection with the database. Also, it checks that the
+    # database is existing or not. If it does not exist, then it creates a new
+    # one.
     #
     # @return [SQLite3::Database] a database object
     def open_database

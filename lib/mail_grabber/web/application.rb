@@ -13,7 +13,7 @@ module MailGrabber
       attr_reader :request, :response
 
       # Method to call MailGrabber::Web::Application. This method will call the
-      # initialize method and returns back with response of the application.
+      # initialize method and returns with response of the application.
       #
       # @param [Hash] env the environment variables
       #
@@ -23,7 +23,7 @@ module MailGrabber
         new(env).response.finish
       end
 
-      # Initialize web application request and response then process the given
+      # Initialize web application request and response, then process the given
       # request.
       #
       # @param [Hash] env the environment variables
@@ -34,7 +34,7 @@ module MailGrabber
         process_request
       end
 
-      # Extract env['PATH_INFO'] value. If the path info is empty then it will
+      # Extract env['PATH_INFO'] value. If the path info is empty, then it will
       # return with root path.
       #
       # @return [String] path the requested path or the root path if this value
@@ -43,7 +43,7 @@ module MailGrabber
         @path ||= request.path_info.empty? ? '/' : request.path_info
       end
 
-      # This method returns back with extracted request parameters.
+      # This method returns with extracted request parameters.
       #
       # @return [Hash] params
       def params
@@ -64,12 +64,12 @@ module MailGrabber
         request.script_name
       end
 
-      # Parse the routes of the ApplicationRouter and tries to find matching
+      # Parse the routes of the ApplicationRouter and tries to find a matching
       # route for the request method, which was defined in the
-      # get, post, put, patch or delete blocks. If the 'extracted_params' is nil
-      # then it could not found any defined routes. If it can find a defined
-      # route then it saves the params and call the given block. If it cannot
-      # find anything then it will set response with 404 Not Found.
+      # get, post, put, patch or delete blocks. If the 'extracted_params' is
+      # nil, then it could not find any defined routes. If it can find a defined
+      # route, then it saves the params and call the given block. If it cannot
+      # find anything, then it will set the response with 404 Not Found.
       def process_request
         self.class.routes[request_method].each do |route|
           extracted_params = route.extract_params(path)
