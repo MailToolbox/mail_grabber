@@ -42,7 +42,7 @@ RSpec.describe MailGrabber::Web::ApplicationRouter do
       let(:path) { '/not_matching' }
 
       it 'returns with nil' do
-        expect(extract_params).to be nil
+        expect(extract_params).to be_nil
       end
     end
 

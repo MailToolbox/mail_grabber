@@ -14,7 +14,7 @@ RSpec.describe MailGrabber::Web do
   describe '.call' do
     before { allow(described_class).to receive(:app).and_return(app) }
 
-    let(:app) { class_double('Web::Application') }
+    let(:app) { class_double(MailGrabber::Web::Application) }
     let(:env) do
       {
         'PATH_INFO' => '/',
