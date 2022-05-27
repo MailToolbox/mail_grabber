@@ -1,5 +1,12 @@
 # Change log
 
+## 1.2.1 (2022-05-27)
+
+### Changes
+
+* Update rack to version 2.2.3.1 because of security issues.
+
+
 ## 1.2.0 (2022-05-26)
 
 ### Changes
