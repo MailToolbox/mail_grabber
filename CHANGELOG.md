@@ -1,5 +1,21 @@
 # Change log
 
+## 1.3.0 (2022-10-04)
+
+### Changes
+
+* Replace rack to rackup gem as a dependency.
+  In the rack 3.x gem it was extracted rackup command, Rack::Server, Rack::Handler, Rack::Lobster and related code into a separate gem.
+* Update bundler and gems.
+
+### Bug fixes
+
+* Fix infinite scroll.
+  In the new Chrome browser, the scrollTop is a float and not an integer. Because of that, the infinite scroll was stopped working.
+* Override webrick server for capybara in RSpec configuration.
+  At this moment capybara does not support the new rack/rackup changes.
+
+
 ## 1.2.1 (2022-05-27)
 
 ### Changes
@@ -35,7 +51,7 @@
 ### Changes
 
 * Update documentation.
-* Change javascript to hide HTML tab if mail does not have HTML part.
+* Change JavaScript to hide HTML tab if mail does not have HTML part.
 * Refactoring the JavaScript code.
 * Change the documentation uri in the gemspec file.
 * Update .rubocop.yml.
