@@ -28,12 +28,12 @@ RSpec.describe MailGrabber::Web::Application do
 
     it 'sets request with expected value' do
       expect(init_method.instance_variable_get(:@request))
-        .to be_a_kind_of(Rack::Request)
+        .to be_a(Rack::Request)
     end
 
     it 'sets response with expected value' do
       expect(init_method.instance_variable_get(:@response))
-        .to be_a_kind_of(Rack::Response)
+        .to be_a(Rack::Response)
     end
 
     # rubocop:disable RSpec/AnyInstance
@@ -132,7 +132,7 @@ RSpec.describe MailGrabber::Web::Application do
     let(:path_info) { '/' }
 
     it 'returns with an Array' do
-      expect(get_main).to be_a_kind_of(Array)
+      expect(get_main).to be_a(Array)
     end
 
     it 'returns with status 200' do
@@ -146,7 +146,7 @@ RSpec.describe MailGrabber::Web::Application do
 
   shared_examples 'an expected JSON response' do
     it 'returns with an Array' do
-      expect(subject).to be_a_kind_of(Array)
+      expect(subject).to be_a(Array)
     end
 
     it 'returns with status 200' do

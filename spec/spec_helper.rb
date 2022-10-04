@@ -48,6 +48,6 @@ RSpec.configure do |config|
   config.after(:suite) do
     db_location = "#{DBCONFIG[:folder]}/#{DBCONFIG[:filename]}"
 
-    File.delete(db_location) if File.exist?(db_location)
+    FileUtils.rm_f(db_location)
   end
 end

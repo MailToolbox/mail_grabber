@@ -9,7 +9,7 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
     visit '/'
   end
 
-  after { File.delete('tmp/LICENSE.txt') if File.exist?('tmp/LICENSE.txt') }
+  after { FileUtils.rm_f('tmp/LICENSE.txt') }
 
   # rubocop:disable RSpec/VariableDefinition, RSpec/VariableName
   let(:message) do

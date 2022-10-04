@@ -239,7 +239,7 @@ module MailGrabber
       if File.exist?(db_location)
         SQLite3::Database.new(db_location, **DATABASE[:params])
       else
-        Dir.mkdir(DATABASE[:folder]) unless Dir.exist?(DATABASE[:folder])
+        FileUtils.mkdir_p(DATABASE[:folder])
 
         SQLite3::Database.new(db_location, **DATABASE[:params]).tap do |db|
           create_mail_table(db)

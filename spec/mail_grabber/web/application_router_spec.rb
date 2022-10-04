@@ -80,7 +80,7 @@ RSpec.describe MailGrabber::Web::ApplicationRouter do
     subject(:get) { TestClass.get('/') { 'GET /' }.last }
 
     it 'creates a new route' do
-      expect(get).to be_kind_of(Struct)
+      expect(get).to be_a(Struct)
     end
 
     it 'has the right pattern' do
@@ -96,7 +96,7 @@ RSpec.describe MailGrabber::Web::ApplicationRouter do
     subject(:post) { TestClass.post('/:id') { 'POST /:id' }.last }
 
     it 'creates a new route' do
-      expect(post).to be_kind_of(Struct)
+      expect(post).to be_a(Struct)
     end
 
     it 'has the right pattern' do
@@ -112,7 +112,7 @@ RSpec.describe MailGrabber::Web::ApplicationRouter do
     subject(:put) { TestClass.put('/:pattern') { 'PUT /:pattern' }.last }
 
     it 'creates a new route' do
-      expect(put).to be_kind_of(Struct)
+      expect(put).to be_a(Struct)
     end
 
     it 'has the right pattern' do
@@ -128,7 +128,7 @@ RSpec.describe MailGrabber::Web::ApplicationRouter do
     subject(:patch) { TestClass.patch('/:user') { 'PATCH /:user' }.last }
 
     it 'creates a new route' do
-      expect(patch).to be_kind_of(Struct)
+      expect(patch).to be_a(Struct)
     end
 
     it 'has the right pattern' do
@@ -144,7 +144,7 @@ RSpec.describe MailGrabber::Web::ApplicationRouter do
     subject(:delete) { TestClass.delete('/:slag') { 'DELETE /:slag' }.last }
 
     it 'creates a new route' do
-      expect(delete).to be_kind_of(Struct)
+      expect(delete).to be_a(Struct)
     end
 
     it 'has the right pattern' do
@@ -160,7 +160,7 @@ RSpec.describe MailGrabber::Web::ApplicationRouter do
     subject(:route) { TestClass.route('GET', '/', &proc { 'GET /' }).last }
 
     it 'creates a new route' do
-      expect(route).to be_kind_of(Struct)
+      expect(route).to be_a(Struct)
     end
 
     it 'has the right pattern' do
@@ -178,7 +178,7 @@ RSpec.describe MailGrabber::Web::ApplicationRouter do
     end
 
     it 'creates a new route' do
-      expect(set_route).to be_kind_of(Struct)
+      expect(set_route).to be_a(Struct)
     end
 
     it 'has the right pattern' do

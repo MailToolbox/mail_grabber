@@ -7,7 +7,7 @@ RSpec.describe MailGrabber::Web do
     let(:app) { described_class.app }
 
     it 'is a kind of Rack::Builder' do
-      expect(app).to be_a_kind_of(Rack::Builder)
+      expect(app).to be_a(Rack::Builder)
     end
   end
 
