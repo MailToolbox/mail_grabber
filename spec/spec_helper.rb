@@ -12,6 +12,18 @@ require 'mail_grabber'
 require 'mail_grabber/web'
 require 'mail'
 
+Capybara.register_server :webrick do |app, port, host, **options|
+  require 'rackup/handler/webrick'
+
+  options = {
+    Host: host,
+    Port: port,
+    AccessLog: [],
+    Logger: WEBrick::Log.new(nil, 0)
+  }.merge(options)
+
+  Rackup::Handler::WEBrick.run(app, **options)
+end
 Capybara.javascript_driver = :apparition
 Capybara.default_driver = Capybara.javascript_driver
 Capybara.save_path = 'tmp'
