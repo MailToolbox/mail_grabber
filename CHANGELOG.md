@@ -1,5 +1,12 @@
 # Change log
 
+## 1.3.1 (2023-01-25)
+
+### Changes
+
+* Update rack to version 3.0.4.1 because of security issues.
+
+
 ## 1.3.0 (2022-10-04)
 
 ### Changes
