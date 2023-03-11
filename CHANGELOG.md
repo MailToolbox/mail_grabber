@@ -1,10 +1,23 @@
 # Change log
 
+## 1.3.2 (2023-03-11)
+
+### Changes
+
+* Update rack to version 3.0.4.2 because of security issues.
+* Update bundler and gems.
+
+
 ## 1.3.1 (2023-01-25)
 
 ### Changes
 
 * Update rack to version 3.0.4.1 because of security issues.
+* Update bundler and gems.
+
+### Bug fixes
+
+* Fix the Ruby version problem in the GitHub Actions workflow file.
 
 
 ## 1.3.0 (2022-10-04)
