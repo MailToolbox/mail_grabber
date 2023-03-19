@@ -5,6 +5,7 @@
 ### Changes
 
 * Update rack to version 3.0.7 because of security issues.
+* Update gem description.
 * Update gems.
 
 

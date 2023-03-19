@@ -9,9 +9,8 @@ Gem::Specification.new do |spec|
   spec.email         = ['sysqa@yahoo.com']
 
   spec.summary       = 'Grab mails to inspect with MailGrabber.'
-  spec.description   = 'Delivery Method to grab emails and inspect on a web ' \
-                       'interface. We can use this Delivery Method with ' \
-                       'Ruby on Rails ActionMailer or other solutions.'
+  spec.description   = 'MailGrabber is yet another solution to inspect sent ' \
+                       'emails.'
   spec.homepage      = 'https://github.com/MailToolbox/mail_grabber'
   spec.license       = 'MIT'
 
