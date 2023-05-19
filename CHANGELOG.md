@@ -1,5 +1,13 @@
 # Change log
 
+## 1.3.4 (2023-05-19)
+
+### Changes
+
+* Add Ruby 3.2 support.
+* Update bundler and gems.
+
+
 ## 1.3.3 (2023-03-19)
 
 ### Changes
