@@ -6,7 +6,7 @@ require 'simplecov'
 SimpleCov.start
 
 require 'bundler/setup'
-require 'capybara/apparition'
+require 'capybara/cuprite'
 require 'capybara/rspec'
 require 'mail_grabber'
 require 'mail_grabber/web'
@@ -24,7 +24,7 @@ Capybara.register_server :webrick do |app, port, host, **options|
 
   Rackup::Handler::WEBrick.run(app, **options)
 end
-Capybara.javascript_driver = :apparition
+Capybara.javascript_driver = :cuprite
 Capybara.default_driver = Capybara.javascript_driver
 Capybara.save_path = 'tmp'
 Capybara.app = MailGrabber::Web

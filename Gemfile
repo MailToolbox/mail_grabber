@@ -14,8 +14,8 @@ gem 'rubocop', '~> 1.11', require: false
 gem 'rubocop-performance', require: false
 gem 'rubocop-rspec', require: false
 
-gem 'apparition', github: 'twalpole/apparition'
 gem 'capybara'
+gem 'cuprite'
 gem 'net-smtp', require: false
 gem 'rspec', '~> 3.0'
 gem 'simplecov', require: false
