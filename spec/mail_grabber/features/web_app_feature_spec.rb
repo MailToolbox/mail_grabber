@@ -141,7 +141,7 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
 
     it 'downloads attachment' do
       within(:xpath, '//ul[@data-content-type="message-attachments"]') do
-        click_link('LICENSE.txt')
+        click_on('LICENSE.txt')
         sleep 1
         expect(File.exist?('tmp/LICENSE.txt')).to be true
       end
