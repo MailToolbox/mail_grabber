@@ -1,5 +1,14 @@
 # Change log
 
+## 1.3.5 (2024-02-20)
+
+### Changes
+
+* Add Ruby 3.3 support.
+* Update bundler and gems.
+* Replace apparition gem to cuprite gem.
+
+
 ## 1.3.4 (2023-05-19)
 
 ### Changes
