@@ -1,5 +1,13 @@
 # Change log
 
+## 1.3.6 (2024-03-05)
+
+### Changes
+
+* Update rack to version 3.0.9.1 because of security issues.
+* Update gems.
+
+
 ## 1.3.5 (2024-02-20)
 
 ### Changes
