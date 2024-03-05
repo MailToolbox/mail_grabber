@@ -24,6 +24,9 @@ Capybara.register_server :webrick do |app, port, host, **options|
 
   Rackup::Handler::WEBrick.run(app, **options)
 end
+Capybara.register_driver :cuprite do |app|
+  Capybara::Cuprite::Driver.new(app, process_timeout: 30)
+end
 Capybara.javascript_driver = :cuprite
 Capybara.default_driver = Capybara.javascript_driver
 Capybara.save_path = 'tmp'
