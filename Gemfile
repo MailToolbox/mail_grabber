@@ -11,6 +11,7 @@ gem 'webrick'
 
 # Ruby static code analyzer and code formatter, code linter in short
 gem 'rubocop', '~> 1.11', require: false
+gem 'rubocop-capybara', require: false
 gem 'rubocop-performance', require: false
 gem 'rubocop-rspec', require: false
 
