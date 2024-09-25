@@ -1,5 +1,14 @@
 # Change log
 
+## 1.3.7 (2024-09-25)
+
+### Changes
+
+* Update webrick to version 1.8.2 because of security issues.
+* Upgrade rackup to version 2.1.0
+* Update gems.
+
+
 ## 1.3.6 (2024-03-05)
 
 ### Changes
