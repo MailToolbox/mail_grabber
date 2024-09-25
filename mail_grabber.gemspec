@@ -33,6 +33,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'mail', '~> 2.5'
-  spec.add_dependency 'rackup', '~> 0.2'
+  spec.add_dependency 'rackup', '~> 2.1'
   spec.add_dependency 'sqlite3', '~> 1.4'
 end
