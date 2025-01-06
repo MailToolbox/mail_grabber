@@ -3,7 +3,7 @@
 module MailGrabber
   module Web
     module ApplicationRouter
-      NAMED_SEGMENTS_PATTERN = %r{/([^/]*):([^.:$/]+)}.freeze
+      NAMED_SEGMENTS_PATTERN = %r{/([^/]*):([^.:$/]+)}
 
       attr_reader :routes
 
