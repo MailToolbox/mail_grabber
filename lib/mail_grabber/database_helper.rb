@@ -38,8 +38,8 @@ module MailGrabber
     #
     # @param [String] query which query we would like to execute
     # @param [Array] args any arguments which we will use in the query
-    def connection_execute(query, *args)
-      connection { |db| db.execute(query, *args) }
+    def connection_execute(query, args = [])
+      connection { |db| db.execute(query, args) }
     end
 
     # Create connection and execute many queries in transaction. It accepts
@@ -68,7 +68,7 @@ module MailGrabber
     #
     # @param [String/Integer] id the identifier of the message
     def delete_message_by(id)
-      connection_execute('DELETE FROM mail WHERE id = ?', id.to_i)
+      connection_execute('DELETE FROM mail WHERE id = ?', [id.to_i])
     end
 
     # Helper method to get all messages.
@@ -80,14 +80,14 @@ module MailGrabber
     #
     # @param [String/Integer] id the identifier of the message
     def select_message_by(id)
-      connection_execute('SELECT * FROM mail WHERE id = ?', id.to_i).first
+      connection_execute('SELECT * FROM mail WHERE id = ?', [id.to_i]).first
     end
 
     # Helper method to get a message part.
     #
     # @param [String/Integer] id the identifier of the message part
     def select_message_parts_by(id)
-      connection_execute('SELECT * FROM mail_part WHERE mail_id = ?', id.to_i)
+      connection_execute('SELECT * FROM mail_part WHERE mail_id = ?', [id.to_i])
     end
 
     # Helper method to get a specific number of messages. We can specify which
@@ -101,8 +101,10 @@ module MailGrabber
 
       connection_execute(
         select_messages_with_pagination_query,
-        per_page * (page - 1),
-        per_page
+        [
+          per_page * (page - 1),
+          per_page
+        ]
       )
     end
 
@@ -194,12 +196,14 @@ module MailGrabber
     def insert_into_mail(db, message)
       db.execute(
         insert_into_mail_query,
-        message.subject,
-        message.from&.join(', '),
-        message.to&.join(', '),
-        message.cc&.join(', '),
-        message.bcc&.join(', '),
-        convert_to_utf8_string(message)
+        [
+          message.subject,
+          message.from&.join(', '),
+          message.to&.join(', '),
+          message.cc&.join(', '),
+          message.bcc&.join(', '),
+          convert_to_utf8_string(message)
+        ]
       )
     end
 
@@ -215,15 +219,17 @@ module MailGrabber
 
         db.execute(
           insert_into_mail_part_query,
-          mail_id,
-          extract_cid(part),
-          extract_mime_type(part),
-          attachment?(part),
-          inline?(part),
-          part.filename,
-          part.charset,
-          encode_if_attachment(part, body),
-          body.length
+          [
+            mail_id,
+            extract_cid(part),
+            extract_mime_type(part),
+            attachment?(part),
+            inline?(part),
+            part.filename,
+            part.charset,
+            encode_if_attachment(part, body),
+            body.length
+          ]
         )
       end
     end
