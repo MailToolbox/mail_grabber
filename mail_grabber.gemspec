@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.files = %w[README.md CHANGELOG.md LICENSE.txt] + Dir.glob('lib/**/*')
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'base64', '~> 0.2'
   spec.add_dependency 'mail', '~> 2.5'
   spec.add_dependency 'rackup', '~> 2.1'
   spec.add_dependency 'sqlite3', '~> 2.0'
