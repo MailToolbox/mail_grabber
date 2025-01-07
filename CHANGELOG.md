@@ -1,5 +1,15 @@
 # Change log
 
+## 1.4.0 (2025-01-07)
+
+### Changes
+
+* Upgrade sqlite3 to version 2.0.4
+* Add Ruby 3.4 support.
+* Drop Ruby 2.7 support.
+* Update bundler and gems.
+
+
 ## 1.3.7 (2024-09-25)
 
 ### Changes
