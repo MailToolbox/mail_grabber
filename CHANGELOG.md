@@ -1,5 +1,12 @@
 # Change log
 
+## 1.4.1 (2025-01-07)
+
+### Bug fixes
+
+* Add base64 gem as a dependency because from Ruby 3.4 this is not a standard gem.
+
+
 ## 1.4.0 (2025-01-07)
 
 ### Changes
