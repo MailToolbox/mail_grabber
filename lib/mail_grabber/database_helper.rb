@@ -126,7 +126,7 @@ module MailGrabber
     # @param [Mail::Part] object
     #
     # @return [Integer] 1 if it is an attachment, else 0
-    def attachment?(object)
+    def attachment(object)
       object.attachment? ? 1 : 0
     end
 
@@ -185,7 +185,7 @@ module MailGrabber
     # @param [Mail::Part] object
     #
     # @return [Integer] 1 if it is an inline attachment, else 0
-    def inline?(object)
+    def inline(object)
       object.respond_to?(:inline?) && object.inline? ? 1 : 0
     end
 
@@ -223,8 +223,8 @@ module MailGrabber
             mail_id,
             extract_cid(part),
             extract_mime_type(part),
-            attachment?(part),
-            inline?(part),
+            attachment(part),
+            inline(part),
             part.filename,
             part.charset,
             encode_if_attachment(part, body),
