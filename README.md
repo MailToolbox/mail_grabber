@@ -4,8 +4,8 @@
 [![MIT license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/MailToolbox/mail_grabber/blob/main/LICENSE.txt)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop-hq/rubocop)
 [![MailGrabber CI](https://github.com/MailToolbox/mail_grabber/actions/workflows/mail_grabber_ci.yml/badge.svg)](https://github.com/MailToolbox/mail_grabber/actions/workflows/mail_grabber_ci.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/97deed5c1fbd003ca810/maintainability)](https://codeclimate.com/github/MailToolbox/mail_grabber/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/97deed5c1fbd003ca810/test_coverage)](https://codeclimate.com/github/MailToolbox/mail_grabber/test_coverage)
+[![Maintainability](https://qlty.sh/gh/MailToolbox/projects/mail_grabber/maintainability.svg)](https://qlty.sh/gh/MailToolbox/projects/mail_grabber)
+[![Code Coverage](https://qlty.sh/gh/MailToolbox/projects/mail_grabber/coverage.svg)](https://qlty.sh/gh/MailToolbox/projects/mail_grabber)
 
 **MailGrabber** is yet another solution to inspect sent emails.
 
