@@ -6,9 +6,6 @@ jobs:
   test-with-ruby:
     runs-on: ubuntu-latest
 
-    env:
-      CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-
     strategy:
       matrix:
         ruby-version: ['3.0', '3.1', '3.2', '3.3', '3.4']
@@ -21,12 +18,6 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
 
-    - name: Setup Code Climate test-reporter
-      run: |
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter before-build
-
     - name: Install dependencies
       run: bundle install
 
@@ -34,4 +25,7 @@ jobs:
       run: bundle exec rake
 
     - name: Publish code coverage
-      run: ./cc-test-reporter after-build
+      uses: qltysh/qlty-action/coverage@v1
+      with:
+        token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+        files: coverage/.resultset.json
