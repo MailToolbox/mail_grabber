@@ -9,8 +9,8 @@
 
 **MailGrabber** is yet another solution to inspect sent emails.
 
-It has two part:
-- delivery method to grab emails and store into a database
+It has two parts:
+- delivery method to grab emails and store them in a database
 - simple rack web interface to check those emails
 
 ## Installation
@@ -29,7 +29,9 @@ Or install it yourself as:
 
     $ gem install mail_grabber
 
-## Usage
+## Documentation
+
+### How Tos
 
 - [How to use MailGrabber in a Ruby script or IRB console](https://github.com/MailToolbox/mail_grabber/blob/main/docs/usage_in_script_or_console.md)
 - [How to use MailGrabber in Ruby on Rails](https://github.com/MailToolbox/mail_grabber/blob/main/docs/usage_in_ruby_on_rails.md)
@@ -43,7 +45,7 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 To release a new version:
 
 - Update [CHANGELOG.md](https://github.com/MailToolbox/mail_grabber/blob/main/CHANGELOG.md)
-- Update the version number in `version.rb` manually or use `gem-release` gem and run `gem bump -v major|minor|patch|rc|beta`.
+- Update the version number in `version.rb` manually or use the `gem-release` gem and run `gem bump -v major|minor|patch|rc|beta`.
 - Build gem with `bundle exec rake build`.
 - Run `bundle install` to update gemfiles and commit the changes.
 - Run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).

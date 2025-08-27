@@ -2,9 +2,9 @@
 
 module MailGrabber
   module DatabaseQueries
-    # Create mail table if it is not exist.
+    # Create a mail table if it does not exist.
     #
-    # @param [SQLite3::Database] db to execute create table query
+    # @param [SQLite3::Database] db to execute the create table query
     def create_mail_table(db)
       db.execute(<<-SQL)
         CREATE TABLE IF NOT EXISTS mail (
@@ -20,9 +20,9 @@ module MailGrabber
       SQL
     end
 
-    # Create mail part table if it is not exist.
+    # Create a mail part table if it does not exist.
     #
-    # @param [SQLite3::Database] db to execute create table query
+    # @param [SQLite3::Database] db to execute the create table query
     def create_mail_part_table(db)
       db.execute(<<-SQL)
         CREATE TABLE IF NOT EXISTS mail_part (
@@ -81,7 +81,7 @@ module MailGrabber
       SQL
     end
 
-    # Select messages with pagination query.
+    # Select messages with a pagination query.
     #
     # @return [Srting] with the select messages query
     def select_messages_with_pagination_query

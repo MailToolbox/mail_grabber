@@ -10,16 +10,16 @@ module MailGrabber
       Route =
         Struct.new(:pattern, :block) do
           # Extract parameters from the given path. All routes have a
-          # path pattern which helps to the router to find which block it should
-          # execute. If the path contains request parameters like '/test/1' then
-          # it will match with the '/test/:id' pattern. In this case, it will
-          # return with '{"id" => "1"}' hash. If it is just a simple path like
-          # '/' and it has a pattern to match, then it will return with '{}'.
-          # In the other case, it will return with nil.
+          # path pattern that helps the router find which block it should
+          # execute. If the path contains request parameters like '/test/1',
+          # then it will match with the '/test/:id' pattern. In this case,
+          # it will return with '{"id" => "1"}' hash. If it is just a simple
+          # path like '/' and it has a pattern to match, then it will return
+          # with '{}'. In the other case, it will return nil.
           #
           # @param [String] path
           #
-          # @return [Hash/NilClass] with the extracted parameters, empty Hash
+          # @return [Hash/NilClass] with the extracted parameters, an empty Hash
           #   or nil
           def extract_params(path)
             if pattern.match?(NAMED_SEGMENTS_PATTERN)
@@ -53,11 +53,11 @@ module MailGrabber
         end
       end
 
-      # Store routes with the request method, the provided pattern and the given
-      # block.
+      # Store routes with the request method, the provided pattern,
+      # and the given block.
       #
-      # @param [String] method e.g. GET, POST etc.
-      # @param [String] pattern the path what we are looking for
+      # @param [String] method e.g. GET, POST, etc.
+      # @param [String] pattern the path that we are looking for
       # @param [Proc] block what we will run
       def route(method, pattern, &block)
         @routes ||= {}
@@ -68,8 +68,8 @@ module MailGrabber
 
       # Set routes Hash with the Route object.
       #
-      # @param [String] method e.g. GET, POST etc.
-      # @param [String] pattern the path what we are looking for
+      # @param [String] method e.g. GET, POST, etc.
+      # @param [String] pattern the path that we are looking for
       # @param [Proc] block what we will run
       def set_route(method, pattern, &block)
         (@routes[method] ||= []) << Route.new(pattern, block)

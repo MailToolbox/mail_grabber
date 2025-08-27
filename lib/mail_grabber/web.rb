@@ -14,7 +14,7 @@ module MailGrabber
   module Web
     module_function
 
-    # Method which build a Rack application and run the
+    # Method that builds a Rack application and runs the
     # MailGrabber::Web::Application.
     def app
       @app ||= Rack::Builder.new do

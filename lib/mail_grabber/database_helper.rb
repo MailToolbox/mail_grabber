@@ -18,11 +18,11 @@ module MailGrabber
       }
     }.freeze
 
-    # Create connection to the SQLite3 database. Use foreign_keys pragmas that
-    # we can use DELETE CASCADE option. It accepts block to execute queries.
-    # If something goes wrong, then it raises a database helper error.
-    # Also ensure to close the database (important to close database if we don't
-    # want to see database busy errors).
+    # Create a connection to the SQLite3 database. Use foreign_keys pragmas so
+    # that we can use the DELETE CASCADE option. It accepts a block to execute
+    # queries. If something goes wrong, then it raises a database helper error.
+    # Also, ensure to close the database (important to close the database if we
+    # don't want to see database busy errors).
     def connection
       database = open_database
       database.foreign_keys = 'ON'
@@ -34,16 +34,16 @@ module MailGrabber
       database&.close
     end
 
-    # Create connection and execute a query.
+    # Create a connection and execute a query.
     #
-    # @param [String] query which query we would like to execute
-    # @param [Array] args any arguments which we will use in the query
+    # @param [String] query which query would we like to execute
+    # @param [Array] args any arguments that we will use in the query
     def connection_execute(query, args = [])
       connection { |db| db.execute(query, args) }
     end
 
-    # Create connection and execute many queries in transaction. It accepts
-    # block to execute queries. If something goes wrong, it rolls back the
+    # Create a connection and execute many queries in a transaction. It accepts
+    # a block to execute queries. If something goes wrong, it rolls back the
     # changes and raises a database helper error.
     def connection_execute_transaction
       connection do |db|
@@ -91,10 +91,10 @@ module MailGrabber
     end
 
     # Helper method to get a specific number of messages. We can specify which
-    # part of the table we need and how many messages want to see.
+    # part of the table we need and how many messages we want to see.
     #
     # @param [String/Integer] page which part of the table want to see
-    # @param [String/Integer] per_page how many messages gives back
+    # @param [String/Integer] per_page how many messages give back
     def select_messages_by(page, per_page)
       page = page.to_i
       per_page = per_page.to_i
@@ -130,8 +130,8 @@ module MailGrabber
       object.attachment? ? 1 : 0
     end
 
-    # Convert the given message or body to utf8 string. Needs this that we can
-    # send it as JSON.
+    # Convert the given message or body to utf8 string. Needs this so that we
+    # can send it as JSON.
     #
     # @param [Mail::Message/Mail::Body] object
     #
@@ -151,7 +151,7 @@ module MailGrabber
       object.attachment? ? Base64.encode64(string) : string
     end
 
-    # Extract cid value from the Mail::Part.
+    # Extract the cid value from the Mail::Part.
     #
     # @param [Mail::Part] object
     #
@@ -170,12 +170,12 @@ module MailGrabber
       message.multipart? ? message.all_parts : [message]
     end
 
-    # Extract MIME type of the Mail::Part object. If it is nil, then it returns
-    # with text/plain value.
+    # Extract the MIME type of the Mail::Part object. If it is nil, then it
+    # returns with a text/plain value.
     #
     # @param [Mail::Part] object
     #
-    # @return [String] with MIME type of the part
+    # @return [String] with the MIME type of the part
     def extract_mime_type(object)
       object.mime_type || 'text/plain'
     end
@@ -234,8 +234,8 @@ module MailGrabber
       end
     end
 
-    # Open a database connection with the database. Also, it checks that the
-    # database is existing or not. If it does not exist, then it creates a new
+    # Open a database connection with the database. Also, it checks whether the
+    # database exists or not. If it does not exist, then it creates a new
     # one.
     #
     # @return [SQLite3::Database] a database object

@@ -7,8 +7,8 @@ module MailGrabber
     # Initialize MailGrabber delivery method (Rails needs it).
     def initialize(options = {}); end
 
-    # Catch and save messages into the database that we can check those messages
-    # in MailGrabber web application.
+    # Catch and save messages into the database so that we can check those
+    # messages in the MailGrabber web application.
     #
     # @param [Mail::Message] message what we would like to send
     def deliver!(message)
@@ -20,7 +20,7 @@ module MailGrabber
       store_mail(message)
     end
 
-    # Delivery method settings (needed when run mail.deliver! method).
+    # Delivery method settings (needed when running the mail.deliver! method).
     def settings
       {}
     end

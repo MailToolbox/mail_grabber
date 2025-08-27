@@ -9,9 +9,9 @@ do so.
 
 * Check that the issue has not already been reported.
 * Check that the issue has not already been fixed in the latest code.
-* Be clear, concise and precise in your description of the problem.
+* Be clear, concise, and precise in your description of the problem.
 * Open an issue with a descriptive title and summary.
-* Include any relevant code to the issue summary.
+* Include any relevant code in the issue summary.
 
 ## Pull requests
 
