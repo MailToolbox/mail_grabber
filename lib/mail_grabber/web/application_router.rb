@@ -59,11 +59,11 @@ module MailGrabber
       # @param [String] method e.g. GET, POST, etc.
       # @param [String] pattern the path that we are looking for
       # @param [Proc] block what we will run
-      def route(method, pattern, &block)
+      def route(method, pattern, &)
         @routes ||= {}
 
-        set_route('HEAD', pattern, &block) if method == 'GET'
-        set_route(method, pattern, &block)
+        set_route('HEAD', pattern, &) if method == 'GET'
+        set_route(method, pattern, &)
       end
 
       # Set routes Hash with the Route object.
