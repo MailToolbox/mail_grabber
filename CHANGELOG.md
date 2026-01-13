@@ -1,5 +1,17 @@
 # Change log
 
+## 1.5.0 (2026-01-13)
+
+### Changes
+
+* Add Ruby 4.0 support.
+* Drop Ruby 3.0 and 3.1 support.
+* Update bundler and gems.
+* Update documentation.
+* Migrate CodeClimate to Qlty.
+* Follow the rubocop changes in the configuration file.
+
+
 ## 1.4.1 (2025-01-07)
 
 ### Bug fixes
