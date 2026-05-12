@@ -74,14 +74,14 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
 
   it 'loads the message list' do
     within(:xpath, '//ul[@data-content-type="message-list"]') do
-      expect(page).to have_content('from@example.com')
-      expect(page).to have_content('This is the message subject')
+      expect(page).to have_text('from@example.com')
+      expect(page).to have_text('This is the message subject')
     end
   end
 
   it 'does NOT load the message content' do
     within(:xpath, '//div[@data-content-type="message-content"]') do
-      expect(page).to have_content('')
+      expect(page).to have_text('')
     end
   end
 
@@ -90,14 +90,14 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
 
     it 'loads the message content' do
       within(:xpath, '//div[@data-content-type="message-content"]') do
-        expect(page).to have_content('This is the message subject')
+        expect(page).to have_text('This is the message subject')
 
-        expect(page).to have_content('from@example.com')
-        expect(page).to have_content('to@example.com')
-        expect(page).to have_content('cc@example.com')
-        expect(page).to have_content('bcc@example.com')
+        expect(page).to have_text('from@example.com')
+        expect(page).to have_text('to@example.com')
+        expect(page).to have_text('cc@example.com')
+        expect(page).to have_text('bcc@example.com')
 
-        expect(page).to have_content('LICENSE.txt')
+        expect(page).to have_text('LICENSE.txt')
 
         expect(page).to have_css('li', text: 'HTML')
         expect(page).to have_css('li', text: 'Plain text')
@@ -110,7 +110,7 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
     it 'shows the HTML message content by default' do
       within_frame(:xpath,
                    '//iframe[@data-content-type="message-html-body"]') do
-        expect(page).to have_content('This is HTML')
+        expect(page).to have_text('This is HTML')
       end
 
       expect(
@@ -152,7 +152,7 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
 
       it 'shows the Plain text message content' do
         within(:xpath, '//pre[@data-content-type="message-text-body"]') do
-          expect(page).to have_content('This is plain text')
+          expect(page).to have_text('This is plain text')
         end
 
         expect(
@@ -180,7 +180,7 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
 
       it 'shows the Raw message content' do
         within(:xpath, '//pre[@data-content-type="message-raw-body"]') do
-          expect(page).to have_content('From: from@example.com')
+          expect(page).to have_text('From: from@example.com')
         end
 
         expect(
@@ -210,11 +210,11 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
         find(:xpath, '//li[@data-content-type="message-delete-tab"]').click
 
         within(:xpath, '//ul[@data-content-type="message-list"]') do
-          expect(page).to have_content('')
+          expect(page).to have_text('')
         end
 
         within(:xpath, '//div[@data-content-type="message-content"]') do
-          expect(page).to have_content('')
+          expect(page).to have_text('')
         end
 
         expect(message_count.first['count']).to eq(0)
@@ -228,7 +228,7 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
         find(:xpath, '//li[@data-content-type="message-close-tab"]').click
 
         within(:xpath, '//div[@data-content-type="message-content"]') do
-          expect(page).to have_content('')
+          expect(page).to have_text('')
         end
 
         expect(message_count.first['count']).to eq(1)
@@ -242,14 +242,14 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
 
       it 'loads the message list' do
         within(:xpath, '//ul[@data-content-type="message-list"]') do
-          expect(page).to have_content('from@example.com')
-          expect(page).to have_content('This is the message subject')
+          expect(page).to have_text('from@example.com')
+          expect(page).to have_text('This is the message subject')
         end
       end
 
       it 'returns to the default state' do
         within(:xpath, '//div[@data-content-type="message-content"]') do
-          expect(page).to have_content('')
+          expect(page).to have_text('')
         end
       end
     end
@@ -261,11 +261,11 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
         find(:xpath, '//li[@data-content-type="message-clear-tab"]').click
 
         within(:xpath, '//ul[@data-content-type="message-list"]') do
-          expect(page).to have_content('')
+          expect(page).to have_text('')
         end
 
         within(:xpath, '//div[@data-content-type="message-content"]') do
-          expect(page).to have_content('')
+          expect(page).to have_text('')
         end
 
         expect(message_count.first['count']).to eq(0)
