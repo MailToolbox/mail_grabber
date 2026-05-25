@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'mail_grabber'
   spec.version       = MailGrabber::VERSION
   spec.authors       = ['Norbert Szivós']
-  spec.email         = ['sysqa@yahoo.com']
+  spec.email         = ['norbertszivos-dev@yahoo.com']
 
   spec.summary       = 'Grab mails to inspect with MailGrabber.'
   spec.description   = 'MailGrabber is yet another solution to inspect sent ' \
