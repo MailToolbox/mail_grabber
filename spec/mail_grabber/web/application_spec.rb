@@ -113,7 +113,7 @@ RSpec.describe MailGrabber::Web::Application do
 
     context 'when it finds a route' do
       it 'calls the route block' do
-        expect(process_request_method).to match(/<!DOCTYPE html>/)
+        expect(process_request_method).to include('<!DOCTYPE html>')
       end
     end
 
@@ -140,7 +140,7 @@ RSpec.describe MailGrabber::Web::Application do
     end
 
     it 'renders the template' do
-      expect(get_main[2][0]).to match(/<!DOCTYPE html>/)
+      expect(get_main[2][0]).to include('<!DOCTYPE html>')
     end
   end
 
@@ -251,7 +251,7 @@ RSpec.describe MailGrabber::Web::Application do
     end
 
     it 'renders the template' do
-      expect(render_method).to match(/<!DOCTYPE html>/)
+      expect(render_method).to include('<!DOCTYPE html>')
     end
   end
 end

@@ -135,7 +135,7 @@ RSpec.describe 'MailGrabber Web App', type: :feature do
     it 'shows inline attachment' do
       within_frame(:xpath,
                    '//iframe[@data-content-type="message-html-body"]') do
-        expect(find(:xpath, '//img')['src']).to match(%r{data:image/png;base64})
+        expect(find(:xpath, '//img')['src']).to include('data:image/png;base64')
       end
     end
 
